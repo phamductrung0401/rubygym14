@@ -1,19 +1,20 @@
-package lib;
-
+package com.rubygym.utils;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
-public class lib {
+public class HttpRequestUtil {
 	
 	//Lấy dữ liệu trong Body của 1 http request
 	public static Object getBody(HttpServletRequest req) throws Exception {
 		try {
 			BufferedReader br = req.getReader();
+		//	System.out.print(JSONValue.parse(readAllLines(br)).getClass());
 			return JSONValue.parse(readAllLines(br));
 		}
 		catch(Exception e) {
@@ -31,5 +32,19 @@ public class lib {
 	    }
 
 	    return content.toString();
+	}
+	public static String[] getQuery(HttpServletRequest req) throws Exception{
+		try {
+			String stringQuery = req.getQueryString();
+			if(stringQuery != null) {
+			return stringQuery.split("&");
+			}
+			else {
+				return null;
+			}
+		}
+		catch(Exception e) {
+			throw e;
+		}
 	}
 }

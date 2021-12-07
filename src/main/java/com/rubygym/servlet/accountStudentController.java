@@ -1,11 +1,9 @@
 package com.rubygym.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
-
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -26,8 +24,8 @@ import com.rubygym.utils.*;
 
 
 
-@WebServlet("/trainer")
-public class trainerController extends HttpServlet  {
+@WebServlet("/account-student")
+public class accountStudentController extends HttpServlet  {
 	private static final long serialVersionUID = 1L;
 	static SessionFactory factory = HibernateUtil.getSessionFactory();
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -37,30 +35,59 @@ public class trainerController extends HttpServlet  {
 			
 			//đọc body của http request
 			JSONObject t =  (JSONObject) HttpRequestUtil.getBody(req);
-			Trainer newTrainer = new Trainer();
-			if (t.get("avatar") != null) newTrainer.setAvatar((String) t.get("avatar"));
-			if (t.get("name") != null)newTrainer.setName((String) t.get("name"));
-			if (t.get("sex") != null) newTrainer.setSex((int) t.get("sex"));
-			if (t.get("date_of_birth") != null)newTrainer.setDate_of_birth(null);
-			if (t.get("phone_number") != null)newTrainer.setPhone_number((String) t.get("phone_number"));
-			if (t.get("email") != null)newTrainer.setEmail((String) t.get("email"));
-			if (t.get("description") != null)newTrainer.setDescription((String) t.get("description"));
-			session.save(newTrainer);
+			System.out.print(t.toJSONString());
+			AccountStudent newAccountStudent = new AccountStudent();
+			if (t.get("username") != null) newAccountStudent.setUsername((String) t.get("username"));
+			else {
+				throw new Exception("Không được để trống tên tài khoản");
+			}
+			if (t.get("password") != null) newAccountStudent.setPassword((String) t.get("password"));
+			else {
+				throw new Exception("Không được để trống mật khẩu");
+			}
+			//Kiểm tra xem đã tồn tại tại khoản trên chưa
+			CriteriaBuilder cb = session.getCriteriaBuilder();
+			CriteriaQuery<AccountStudent> cr = cb.createQuery(AccountStudent.class);
+			Root<AccountStudent> root  = cr.from(AccountStudent.class);
+			cr.where(root.get("username").in(t.get("username")));		
+			List<AccountStudent> result = session.createQuery(cr).getResultList();
+			System.out.print(result.toString());
+			if(result.size() > 0) {
+				throw new Exception("Tài khoản này đã tồn tại");
+			}
+			
+			session.save(newAccountStudent);
 			tx.commit();
 			
+			//Lấy thông tin tài khoản vừa tạo
+			cb = session.getCriteriaBuilder();
+			CriteriaQuery<AccountStudent> cr1 = cb.createQuery(AccountStudent.class);
+			Root<AccountStudent> root1  = cr1.from(AccountStudent.class);
+			cr1.where(root1.get("username").in(t.get("username")));		
+			List<AccountStudent> result1 = session.createQuery(cr1).getResultList();
 			
-			//gửi http response về cho client
+			//Gửi thông tin tài khoản vừa tạo về cho client
 			JSONObject bodyJsonResponse = new JSONObject();
+			JSONArray data = new JSONArray();
+			for(AccountStudent temp:result1) {
+				JSONObject jo = new JSONObject();
+				jo.put("id", temp.getId());
+				jo.put("username", temp.getUsername());
+				jo.put("password", temp.getPassword());
+				((ArrayList) data).add(jo);
+			}
+			bodyJsonResponse.put("data", data);
 			bodyJsonResponse.put("error", "null");
-			bodyJsonResponse.put("data", "null");
 			String bodyStringResponse = bodyJsonResponse.toJSONString();
 			PrintWriter out = res.getWriter();
 		    res.setContentType("application/json");
 		    res.setCharacterEncoding("UTF-8");
 		    out.print(bodyStringResponse);
-		    out.flush();  					
+		    out.flush(); 
+							
 			
 		} catch (Exception e) {
+			System.out.print(e.getMessage());
 			JSONObject bodyJsonResponse = new JSONObject();
 			bodyJsonResponse.put("error", e.getMessage());
 			JSONArray errors = new JSONArray();
@@ -81,8 +108,8 @@ public class trainerController extends HttpServlet  {
 			Transaction tx = session.beginTransaction();
 			String[] criteria_array = HttpRequestUtil.getQuery(req);
 			CriteriaBuilder cb = session.getCriteriaBuilder();
-			CriteriaQuery<Trainer> cr = cb.createQuery(Trainer.class);
-			Root<Trainer> root  = cr.from(Trainer.class);
+			CriteriaQuery<AccountStudent> cr = cb.createQuery(AccountStudent.class);
+			Root<AccountStudent> root  = cr.from(AccountStudent.class);
 			if(criteria_array != null) {
 				for(int i=0;i<criteria_array.length;i++) {
 					System.out.print(criteria_array[i].split("=")[0]);
@@ -90,23 +117,15 @@ public class trainerController extends HttpServlet  {
 					cr.where(root.get(criteria_array[i].split("=")[0]).in(criteria_array[i].split("=")[1]));
 				}
 			}
-			List<Trainer> result = session.createQuery(cr).getResultList();
-			
-			for(Trainer temp:result) {
-				System.out.print(temp.getName());
-			}
+			List<AccountStudent> result = session.createQuery(cr).getResultList();
+			System.out.print(result.get(0).getUsername().toString());
 			JSONObject bodyJsonResponse = new JSONObject();
 			JSONArray data = new JSONArray();
-			for(Trainer temp:result) {
+			for(AccountStudent temp:result) {
 				JSONObject jo = new JSONObject();
 				jo.put("id", temp.getId());
-				jo.put("avatar", temp.getAvatar());
-				jo.put("name", temp.getName());
-				jo.put("sex", temp.getSex());
-				jo.put("date_of_birth", temp.getDate_of_birth());
-				jo.put("phone_number", temp.getPhone_number());
-				jo.put("description", temp.getDescription());
-				jo.put("account_trainer_id", temp.getAccount_trainer_id());
+				jo.put("username", temp.getUsername());
+				jo.put("password", temp.getPassword());
 				((ArrayList) data).add(jo);
 			}
 			bodyJsonResponse.put("data", data);
@@ -140,27 +159,21 @@ public class trainerController extends HttpServlet  {
 			
 			//đọc body của http request
 			JSONObject t =  (JSONObject) HttpRequestUtil.getBody(req);
-			Trainer newTrainer = new Trainer();
+			AccountStudent newAccountStudent = new AccountStudent();
 		
 			Long temp = (Long) t.get("id");
 			
 			CriteriaBuilder cb = session.getCriteriaBuilder();
-			CriteriaQuery<Trainer> cr = cb.createQuery(Trainer.class);
-			Root<Trainer> root  = cr.from(Trainer.class);			
+			CriteriaQuery<AccountStudent> cr = cb.createQuery(AccountStudent.class);
+			Root<AccountStudent> root  = cr.from(AccountStudent.class);			
 			cr.where(root.get("id").in(temp.intValue()));
-			List<Trainer> result = session.createQuery(cr).getResultList();
-			newTrainer = result.get(0);		
+			List<AccountStudent> result = session.createQuery(cr).getResultList();
+			newAccountStudent = result.get(0);		
 
-			if (t.get("avatar") != null) newTrainer.setAvatar((String) t.get("avatar"));
-			if (t.get("name") != null)newTrainer.setName((String) t.get("name"));
-			if (t.get("sex") != null) newTrainer.setSex((int) t.get("sex"));
-			if (t.get("date_of_birth") != null)newTrainer.setDate_of_birth(Date.valueOf((String) t.get("date_of_birth")));
-			if (t.get("phone_number") != null)newTrainer.setPhone_number((String) t.get("phone_number"));
-			if (t.get("email") != null)newTrainer.setEmail((String) t.get("email"));
-			if (t.get("description") != null)newTrainer.setDescription((String) t.get("description"));
-			if (t.get("account_trainer_id") != null)newTrainer.setAccount_trainer_id( ((Long) t.get("account_trainer_id")).intValue());
-			session.update(newTrainer);
+			if (t.get("password") != null) newAccountStudent.setPassword((String) t.get("password"));
+			session.update(newAccountStudent);
 			tx.commit();
+			
 			
 			
 			//gửi http response về cho client

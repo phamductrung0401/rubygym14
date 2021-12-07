@@ -1,4 +1,4 @@
-package model;
+package com.rubygym.model;
 import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.Entity;
@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import org.json.simple.JSONObject;
 @Entity(name="trainer")
 
-public class trainer extends JSONObject{
+public class Trainer extends JSONObject{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -20,7 +20,7 @@ public class trainer extends JSONObject{
 	private String phone_number;
 	private String email;
 	private String description;
-	private int account_id;
+	private int account_trainer_id;
 	public int getId() {
 		return id;
 	}
@@ -63,11 +63,11 @@ public class trainer extends JSONObject{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public void setAccount_id(int account_id) {
-		this.account_id = account_id;
+	public void setAccount_trainer_id(int account_id) {
+		this.account_trainer_id = account_id;
 	}
-	public int getAccount_id() {
-		return account_id;
+	public int getAccount_trainer_id() {
+		return account_trainer_id;
 	}
 	public String getAvatar() {
 		return avatar;

@@ -1,8 +1,8 @@
-package model;
+package com.rubygym.utils;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class model {
+public class HibernateUtil {
 	public static SessionFactory getSessionFactory() {
 		try {
 			Configuration configuration = new Configuration();
@@ -10,6 +10,7 @@ public class model {
 			return configuration.buildSessionFactory();
 		}
 		catch(Exception e) {
+			System.out.print(e.getMessage());
 			return null;
 		}
 	
