@@ -47,18 +47,20 @@ public class authenticationTrainer extends HttpServlet {
 			CriteriaBuilder cb = session.getCriteriaBuilder();
 			CriteriaQuery<AccountTrainer> cr = cb.createQuery(AccountTrainer.class);
 			Root<AccountTrainer> root  = cr.from(AccountTrainer.class);		
-			cr.where(root.get("username").in(t.get("username")));
+			
+			cr.where(root.get("username").in(t.get("username")), (root.get("password").in(t.get("password"))));
 			List<AccountTrainer> result = session.createQuery(cr).getResultList();
 			if(result.size() == 0) {
 				throw new Exception("Sai tài khoản hoặc sai tên mật khẩu");
 			}
+			System.out.print(result.get(0).getId());
 			//Tìm kiếm thông tin user có tài khoản đã đăng nhập
 			cb = session.getCriteriaBuilder();
 			CriteriaQuery<Trainer> cr1 = cb.createQuery(Trainer.class);
 			Root<Trainer> root1  = cr1.from(Trainer.class);
 			cr1.where(root1.get("account_trainer_id").in(result.get(0).getId()));
 			List<Trainer> result1 = session.createQuery(cr1).getResultList();	
-			System.out.print(result1.toString());
+			//System.out.print(result1.toString());
 			System.out.print(result1.get(0).getName());
 			System.out.print(result1.get(0).getId());
 		

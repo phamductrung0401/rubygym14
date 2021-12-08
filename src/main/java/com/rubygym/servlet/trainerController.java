@@ -45,6 +45,7 @@ public class trainerController extends HttpServlet  {
 			if (t.get("phone_number") != null)newTrainer.setPhone_number((String) t.get("phone_number"));
 			if (t.get("email") != null)newTrainer.setEmail((String) t.get("email"));
 			if (t.get("description") != null)newTrainer.setDescription((String) t.get("description"));
+			if (t.get("account_trainer_id") != null) newTrainer.setAccount_trainer_id( ((Long) t.get("account_trainer_id")).intValue());
 			session.save(newTrainer);
 			tx.commit();
 			

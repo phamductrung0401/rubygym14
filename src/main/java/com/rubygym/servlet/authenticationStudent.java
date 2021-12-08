@@ -47,7 +47,7 @@ public class authenticationStudent extends HttpServlet {
 			CriteriaBuilder cb = session.getCriteriaBuilder();
 			CriteriaQuery<AccountStudent> cr = cb.createQuery(AccountStudent.class);
 			Root<AccountStudent> root  = cr.from(AccountStudent.class);		
-			cr.where(root.get("username").in(t.get("username")));
+			cr.where(root.get("username").in(t.get("username")), (root.get("password").in(t.get("password"))));
 			List<AccountStudent> result = session.createQuery(cr).getResultList();
 			if(result.size() == 0) {
 				throw new Exception("Sai tài khoản hoặc sai tên mật khẩu");
