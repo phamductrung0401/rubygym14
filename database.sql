@@ -285,3 +285,8 @@ INSERT INTO `rubygym`.`schedule` (`trainer_student_id`, `time_id`) VALUES ('1', 
 INSERT INTO `rubygym`.`schedule` (`trainer_student_id`, `time_id`) VALUES ('1', '15');
 INSERT INTO `rubygym`.`schedule` (`trainer_student_id`, `time_id`) VALUES ('5', '1');
 INSERT INTO `rubygym`.`schedule` (`trainer_student_id`, `time_id`) VALUES ('5', '15');
+
+truncate requirement;
+INSERT INTO `rubygym`.`requirement` (`trainer_student_id`, `schedule_id`, `category`) VALUES ('1', '1', '-1');
+INSERT INTO `rubygym`.`requirement` (`trainer_student_id`, `schedule_id`, `time_id_new`, `category`) VALUES ('1', '2', '30', '0');
+INSERT INTO `rubygym`.`requirement` (`trainer_student_id`, `time_id_new`, `category`) VALUES ('1', '40', '1');
