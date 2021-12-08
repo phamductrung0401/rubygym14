@@ -1,5 +1,6 @@
-package controller;
+package com.rubygym.servlet;
 import java.io.IOException;
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,29 +19,36 @@ import org.hibernate.SessionFactory;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
-import model.model;
-import model.trainer;
-import lib.lib;
+
+import com.rubygym.model.Trainer;
+import com.rubygym.utils.HttpRequestUtil;
+import com.rubygym.utils.HibernateUtil;
+
+
 @WebServlet("/trainer")
-public class trainerController extends HttpServlet  {
+public class TrainerServlet extends HttpServlet  {
+	
 	private static final long serialVersionUID = 1L;
-	static SessionFactory factory =  model.getSessionFactory();
+	private SessionFactory factory =  HibernateUtil.getSessionFactory();
+	
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try {
 			Session session = factory.openSession();
 			Transaction tx = session.beginTransaction();
 			
 			//đọc body của http request
-			JSONObject t =  (JSONObject) lib.getBody(req);
-			trainer newTrainer = new trainer();
+			JSONObject t =  (JSONObject) HttpRequestUtil.getBody(req);
+			Trainer newTrainer = new Trainer();
 			if (t.get("avatar") != null) newTrainer.setAvatar((String) t.get("avatar"));
 			if (t.get("name") != null)newTrainer.setName((String) t.get("name"));
 			if (t.get("sex") != null) newTrainer.setSex((int) t.get("sex"));
-			if (t.get("date_of_birth") != null)newTrainer.setDate_of_birth(null);
-			if (t.get("phone_number") != null)newTrainer.setPhone_number((String) t.get("phone_number"));
+			if (t.get("date_of_birth") != null)newTrainer.setDateOfBirth(null);
+			if (t.get("phone_number") != null)newTrainer.setPhoneNumber((String) t.get("phone_number"));
 			if (t.get("email") != null)newTrainer.setEmail((String) t.get("email"));
 			if (t.get("description") != null)newTrainer.setDescription((String) t.get("description"));
+			
 			session.save(newTrainer);
+			
 			tx.commit();
 			
 			
@@ -49,6 +57,7 @@ public class trainerController extends HttpServlet  {
 			bodyJsonResponse.put("error", "null");
 			bodyJsonResponse.put("data", "null");
 			String bodyStringResponse = bodyJsonResponse.toJSONString();
+			
 			PrintWriter out = res.getWriter();
 		    res.setContentType("application/json");
 		    res.setCharacterEncoding("UTF-8");
@@ -67,7 +76,10 @@ public class trainerController extends HttpServlet  {
 		    res.setContentType("application/json");
 		    res.setCharacterEncoding("UTF-8");
 		    out.print(bodyStringResponse);
-		    out.flush();  				
+		    out.flush();
+ 				
+		} finally {
+			factory.close();
 		}
 	}
 	

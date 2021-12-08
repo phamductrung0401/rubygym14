@@ -1,19 +1,19 @@
 package com.rubygym.model;
-import java.io.Serializable;
-import java.sql.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Id;
 
-import org.json.simple.JSONObject;
+import java.time.LocalDate;
+
+import javax.persistence.Column;
 
 @Entity
-@Table(name="trainer") // tên bảng
-public class Trainer extends JSONObject{
+@Table(name="student")
+public class Student {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
@@ -29,7 +29,7 @@ public class Trainer extends JSONObject{
 	private int sex;
 	
 	@Column(name="date_of_birth")
-	private Date dateOfBirth;
+	private LocalDate dateOfBirth;
 	
 	@Column(name="phone_number")
 	private String phoneNumber;
@@ -40,11 +40,26 @@ public class Trainer extends JSONObject{
 	@Column(name="description")
 	private String description;
 	
-	@Column(name="account_trainer_id")
+	@Column(name="weight")
+	private float weight;
+	
+	@Column(name="height")
+	private float height;
+	
+	@Column(name="bmi")
+	private float bmi;
+	
+	@Column(name="others")
+	private String others;
+	
+	@Column(name="target")
+	private String target;
+	
+	@Column(name="account_student_id")
 	private int accountId;
 
-	public Trainer(int id, String avatar, String name, int sex, Date dateOfBirth, String phoneNumber, String email,
-			String description, int accountId) {
+	public Student(int id, String avatar, String name, int sex, LocalDate dateOfBirth, String phoneNumber, String email,
+			String description, float weight, float height, float bmi, String others, String target, int accountId) {
 		super();
 		this.id = id;
 		this.avatar = avatar;
@@ -54,16 +69,17 @@ public class Trainer extends JSONObject{
 		this.phoneNumber = phoneNumber;
 		this.email = email;
 		this.description = description;
+		this.weight = weight;
+		this.height = height;
+		this.bmi = bmi;
+		this.others = others;
+		this.target = target;
 		this.accountId = accountId;
 	}
 	
-	
-
-	public Trainer() {
-
+	public Student() {
+		
 	}
-
-
 
 	public int getId() {
 		return id;
@@ -97,11 +113,11 @@ public class Trainer extends JSONObject{
 		this.sex = sex;
 	}
 
-	public Date getDateOfBirth() {
+	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(Date dateOfBirth) {
+	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
@@ -127,6 +143,46 @@ public class Trainer extends JSONObject{
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public float getWeight() {
+		return weight;
+	}
+
+	public void setWeight(float weight) {
+		this.weight = weight;
+	}
+
+	public float getHeight() {
+		return height;
+	}
+
+	public void setHeight(float height) {
+		this.height = height;
+	}
+
+	public float getBmi() {
+		return bmi;
+	}
+
+	public void setBmi(float bmi) {
+		this.bmi = bmi;
+	}
+
+	public String getOthers() {
+		return others;
+	}
+
+	public void setOthers(String others) {
+		this.others = others;
+	}
+
+	public String getTarget() {
+		return target;
+	}
+
+	public void setTarget(String target) {
+		this.target = target;
 	}
 
 	public int getAccountId() {
