@@ -28,10 +28,12 @@ import com.rubygym.utils.*;
 
 
 
-@WebServlet("/trainer")
-public class trainerController extends HttpServlet  {
+@WebServlet("/student")
+public class StudentController extends HttpServlet  {
 	private static final long serialVersionUID = 1L;
 	static SessionFactory factory = HibernateUtil.getSessionFactory();
+	
+	// admin tạo mới 1 student, cập nhật account_student_id vào thông tin cá nhân
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try {
 			Session session = factory.openSession();
@@ -39,16 +41,21 @@ public class trainerController extends HttpServlet  {
 			
 			//đọc body của http request
 			JSONObject t =  (JSONObject) HttpRequestUtil.getBody(req);
-			Trainer newTrainer = new Trainer();
-			if (t.get("avatar") != null) newTrainer.setAvatar((String) t.get("avatar"));
-			if (t.get("name") != null)newTrainer.setName((String) t.get("name"));
-			if (t.get("sex") != null) newTrainer.setSex((int) t.get("sex"));
-			if (t.get("date_of_birth") != null)newTrainer.setDateOfBirth(null);
-			if (t.get("phone_number") != null)newTrainer.setPhoneNumber((String) t.get("phone_number"));
-			if (t.get("email") != null)newTrainer.setEmail((String) t.get("email"));
-			if (t.get("description") != null)newTrainer.setDescription((String) t.get("description"));
-			if (t.get("account_trainer_id") != null) newTrainer.setAccountId( ((Long) t.get("account_trainer_id")).intValue());
-			session.save(newTrainer);
+			Student newStudent = new Student();
+			if (t.get("avatar") != null) newStudent.setAvatar((String) t.get("avatar"));
+			if (t.get("name") != null)newStudent.setName((String) t.get("name"));
+			if (t.get("sex") != null) newStudent.setSex((int) t.get("sex"));
+			if (t.get("date_of_birth") != null)newStudent.setDateOfBirth(LocalDate.parse(((String) t.get("date_of_birth")), DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+			if (t.get("phone_number") != null)newStudent.setPhoneNumber((String) t.get("phone_number"));
+			if (t.get("email") != null)newStudent.setEmail((String) t.get("email"));
+			if (t.get("description") != null)newStudent.setDescription((String) t.get("description"));
+			if (t.get("weight") != null) newStudent.setWeight((float) t.get("weight"));
+			if (t.get("height") != null) newStudent.setHeight((float) t.get("height"));
+			if (t.get("bmi") != null) newStudent.setBmi((float) t.get("bmi"));
+			if (t.get("others") != null) newStudent.setOthers((String) t.get("others"));
+			if (t.get("target") != null) newStudent.setTarget((String) t.get("target"));
+			if (t.get("account_student_id") != null) newStudent.setAccountId( ((Long) t.get("account_student_id")).intValue());
+			session.save(newStudent);
 			tx.commit();
 			
 			
@@ -78,14 +85,16 @@ public class trainerController extends HttpServlet  {
 		    out.flush();  				
 		}
 	}
+	
+	// lấy tất cả thông tin cá nhân của student
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		try {
 			Session session = factory.openSession();
 			Transaction tx = session.beginTransaction();
 			String[] criteria_array = HttpRequestUtil.getQuery(req);
 			CriteriaBuilder cb = session.getCriteriaBuilder();
-			CriteriaQuery<Trainer> cr = cb.createQuery(Trainer.class);
-			Root<Trainer> root  = cr.from(Trainer.class);
+			CriteriaQuery<Student> cr = cb.createQuery(Student.class);
+			Root<Student> root  = cr.from(Student.class);
 			if(criteria_array != null) {
 				for(int i=0;i<criteria_array.length;i++) {
 					System.out.print(criteria_array[i].split("=")[0]);
@@ -93,14 +102,14 @@ public class trainerController extends HttpServlet  {
 					cr.where(root.get(criteria_array[i].split("=")[0]).in(criteria_array[i].split("=")[1]));
 				}
 			}
-			List<Trainer> result = session.createQuery(cr).getResultList();
+			List<Student> result = session.createQuery(cr).getResultList();
 			
-			for(Trainer temp:result) {
+			for(Student temp:result) {
 				System.out.print(temp.getName());
 			}
 			JSONObject bodyJsonResponse = new JSONObject();
 			JSONArray data = new JSONArray();
-			for(Trainer temp:result) {
+			for(Student temp:result) {
 				JSONObject jo = new JSONObject();
 				jo.put("id", temp.getId());
 				jo.put("avatar", temp.getAvatar());
@@ -110,6 +119,13 @@ public class trainerController extends HttpServlet  {
 				jo.put("phone_number", temp.getPhoneNumber());
 				jo.put("description", temp.getDescription());
 				jo.put("account_trainer_id", temp.getAccountId());
+				jo.put("height", temp.getHeight());
+				jo.put("weight", temp.getWeight());
+				jo.put("bmi", temp.getBmi());
+				jo.put("others", temp.getOthers());
+				jo.put("target", temp.getTarget());
+				
+			
 				((ArrayList) data).add(jo);
 			}
 			bodyJsonResponse.put("data", data);
@@ -136,6 +152,15 @@ public class trainerController extends HttpServlet  {
 		    out.flush();  		
 		}
 	}
+	
+	
+	
+	
+	// Các chức năng của student
+	
+	
+	
+	// student sửa thông tin cá nhân của 1 student theo Id
 	protected void doPut(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try {
 			Session session = factory.openSession();
@@ -143,26 +168,31 @@ public class trainerController extends HttpServlet  {
 			
 			//đọc body của http request
 			JSONObject t =  (JSONObject) HttpRequestUtil.getBody(req);
-			Trainer newTrainer = new Trainer();
+			Student newStudent = new Student();
 		
 			Long temp = (Long) t.get("id");
 			
 			CriteriaBuilder cb = session.getCriteriaBuilder();
-			CriteriaQuery<Trainer> cr = cb.createQuery(Trainer.class);
-			Root<Trainer> root  = cr.from(Trainer.class);			
+			CriteriaQuery<Student> cr = cb.createQuery(Student.class);
+			Root<Student> root  = cr.from(Student.class);			
 			cr.where(root.get("id").in(temp.intValue()));
-			List<Trainer> result = session.createQuery(cr).getResultList();
-			newTrainer = result.get(0);		
+			List<Student> result = session.createQuery(cr).getResultList();
+			newStudent = result.get(0);		
 
-			if (t.get("avatar") != null) newTrainer.setAvatar((String) t.get("avatar"));
-			if (t.get("name") != null)newTrainer.setName((String) t.get("name"));
-			if (t.get("sex") != null) newTrainer.setSex((int) t.get("sex"));
-			if (t.get("date_of_birth") != null)newTrainer.setDateOfBirth(LocalDate.parse(((String) t.get("date_of_birth")), DateTimeFormatter.ofPattern("yyyy/MM/dd")));
-			if (t.get("phone_number") != null)newTrainer.setPhoneNumber((String) t.get("phone_number"));
-			if (t.get("email") != null)newTrainer.setEmail((String) t.get("email"));
-			if (t.get("description") != null)newTrainer.setDescription((String) t.get("description"));
-			if (t.get("account_trainer_id") != null)newTrainer.setAccountId( ((Long) t.get("account_trainer_id")).intValue());
-			session.update(newTrainer);
+			if (t.get("avatar") != null) newStudent.setAvatar((String) t.get("avatar"));
+			if (t.get("name") != null)newStudent.setName((String) t.get("name"));
+			if (t.get("sex") != null) newStudent.setSex((int) t.get("sex"));
+			if (t.get("date_of_birth") != null)newStudent.setDateOfBirth(LocalDate.parse(((String) t.get("date_of_birth")), DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+			if (t.get("phone_number") != null)newStudent.setPhoneNumber((String) t.get("phone_number"));
+			if (t.get("email") != null)newStudent.setEmail((String) t.get("email"));
+			if (t.get("description") != null)newStudent.setDescription((String) t.get("description"));
+			if (t.get("height") != null)newStudent.setHeight(((Long) t.get("height")).floatValue());
+			if (t.get("weight") != null)newStudent.setWeight(((Long) t.get("weight")).floatValue());
+			if (t.get("bmi") != null)newStudent.setBmi(((Long) t.get("bmi")).floatValue());
+			if (t.get("others") != null)newStudent.setOthers((String) t.get("others"));
+			if (t.get("target") != null)newStudent.setEmail((String) t.get("target"));
+			if (t.get("account_student_id") != null)newStudent.setAccountId(((Long) t.get("account_student_id")).intValue());
+			session.update(newStudent);
 			tx.commit();
 			
 			

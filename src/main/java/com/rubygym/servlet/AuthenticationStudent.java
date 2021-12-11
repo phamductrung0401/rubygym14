@@ -23,10 +23,12 @@ import org.json.simple.JSONObject;
 
 import com.rubygym.model.*;
 import com.rubygym.utils.*;
-@WebServlet("/authentication-trainer")
-public class authenticationTrainer extends HttpServlet {
+@WebServlet("/authentication-student")
+public class AuthenticationStudent extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	static SessionFactory factory = HibernateUtil.getSessionFactory();
+	
+	// check đăng nhập cho student và trả về thông tin cá nhân cho client, sở hữu tài khoản nầy (nếu tồn tại)
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try {
 			Session session = factory.openSession();
@@ -34,40 +36,38 @@ public class authenticationTrainer extends HttpServlet {
 			
 			//đọc body của http request
 			JSONObject t =  (JSONObject) HttpRequestUtil.getBody(req);
-			AccountTrainer newAccountTrainer = new AccountTrainer();
-			if (t.get("username") != null) newAccountTrainer.setUsername((String) t.get("username"));
+			AccountStudent newAccountStudent = new AccountStudent();
+			if (t.get("username") != null) newAccountStudent.setUsername((String) t.get("username"));
 			else {
 				throw new Exception("Không được để trống tên tài khoản");
 			}
-			if (t.get("password") != null) newAccountTrainer.setPassword((String) t.get("password"));
+			if (t.get("password") != null) newAccountStudent.setPassword((String) t.get("password"));
 			else {
 				throw new Exception("Không được để trống mật khẩu");
 			}
 			//Tìm xem có tồn tại tài khoản nào như trên không
 			CriteriaBuilder cb = session.getCriteriaBuilder();
-			CriteriaQuery<AccountTrainer> cr = cb.createQuery(AccountTrainer.class);
-			Root<AccountTrainer> root  = cr.from(AccountTrainer.class);		
-			
+			CriteriaQuery<AccountStudent> cr = cb.createQuery(AccountStudent.class);
+			Root<AccountStudent> root  = cr.from(AccountStudent.class);		
 			cr.where(root.get("username").in(t.get("username")), (root.get("password").in(t.get("password"))));
-			List<AccountTrainer> result = session.createQuery(cr).getResultList();
+			List<AccountStudent> result = session.createQuery(cr).getResultList();
 			if(result.size() == 0) {
 				throw new Exception("Sai tài khoản hoặc sai tên mật khẩu");
 			}
-			System.out.print(result.get(0).getId());
 			//Tìm kiếm thông tin user có tài khoản đã đăng nhập
 			cb = session.getCriteriaBuilder();
-			CriteriaQuery<Trainer> cr1 = cb.createQuery(Trainer.class);
-			Root<Trainer> root1  = cr1.from(Trainer.class);
-			cr1.where(root1.get("account_trainer_id").in(result.get(0).getId()));
-			List<Trainer> result1 = session.createQuery(cr1).getResultList();	
-			//System.out.print(result1.toString());
+			CriteriaQuery<Student> cr1 = cb.createQuery(Student.class);
+			Root<Student> root1  = cr1.from(Student.class);
+			cr1.where(root1.get("account_student_id").in(result.get(0).getId()));
+			List<Student> result1 = session.createQuery(cr1).getResultList();	
+			System.out.print(result1.toString());
 			System.out.print(result1.get(0).getName());
 			System.out.print(result1.get(0).getId());
 		
 			//Gửi thông tin cá nhân của chủ sở hữu tài khoản này về cho client
 			JSONObject bodyJsonResponse = new JSONObject();
 			JSONArray data = new JSONArray();
-			for(Trainer temp:result1) {
+			for(Student temp:result1) {
 				JSONObject jo = new JSONObject();
 				jo.put("id", temp.getId());
 				jo.put("avatar", temp.getAvatar());
