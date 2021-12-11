@@ -16,22 +16,22 @@ public class Requirement {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private int id;
+	private Integer id;
 	
 	@Column(name = "trainer_student_id")
-	private int trainerStudentId;
+	private Integer trainerStudentId;
 	
 	@Column(name = "schedule_id")
-	private int scheduleId = -1; // mặc định là -1, nếu thao tác là create
+	private Integer scheduleId = 1; // mặc định là +1, nếu thao tác là create
 	
 	@Column(name = "time_id_new")
-	private int timeId;
+	private Integer timeId;
 	
 	@Column(name = "category")
-	private int category;
+	private Integer category;
 
 
-	public Requirement(int id, int trainerStudentId, int scheduleId, int timeId, int category) {
+	public Requirement(Integer id, Integer trainerStudentId, Integer scheduleId, Integer timeId, Integer category) {
 		super();
 		this.id = id;
 		this.trainerStudentId = trainerStudentId;
@@ -39,45 +39,57 @@ public class Requirement {
 		this.timeId = timeId;
 		this.category = category;
 	}
+	
+	public Requirement(Integer trainerStudentId, Integer scheduleId, Integer timeId, Integer category) {
+		
+		this.trainerStudentId = trainerStudentId;
+		this.scheduleId = scheduleId;
+		this.timeId = timeId;
+		this.category = category;
+	}
+	
+	public Requirement() {
+		
+	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getTrainerStudentId() {
+	public Integer getTrainerStudentId() {
 		return trainerStudentId;
 	}
 
-	public void setTrainerStudentId(int trainerStudentId) {
+	public void setTrainerStudentId(Integer trainerStudentId) {
 		this.trainerStudentId = trainerStudentId;
 	}
 
-	public int getScheduleId() {
+	public Integer getScheduleId() {
 		return scheduleId;
 	}
 
-	public void setScheduleId(int scheduleId) {
+	public void setScheduleId(Integer scheduleId) {
 		this.scheduleId = scheduleId;
 	}
 
 
-	public int getCategory() {
+	public Integer getCategory() {
 		return category;
 	}
 
-	public void setCategory(int category) {
+	public void setCategory(Integer category) {
 		this.category = category;
 	}
 
-	public int getTimeId() {
+	public Integer getTimeId() {
 		return timeId;
 	}
 
-	public void setTimeId(int timeId) {
+	public void setTimeId(Integer timeId) {
 		this.timeId = timeId;
 	}
 	

@@ -14,7 +14,7 @@ public class AccountTrainer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
-	private int id;
+	private Integer id;
 	
 	@Column(name = "username")
 	private String username;
@@ -22,7 +22,7 @@ public class AccountTrainer {
 	@Column(name = "password")
 	private String password;
 
-	public AccountTrainer(int id, String username, String password) {
+	public AccountTrainer(Integer id, String username, String password) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -33,11 +33,11 @@ public class AccountTrainer {
 
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

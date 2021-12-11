@@ -17,7 +17,7 @@ public class Trainer extends JSONObject{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
-	private int id;
+	private Integer id;
 	
 	@Column(name="avatar")
 	private String avatar;
@@ -26,7 +26,7 @@ public class Trainer extends JSONObject{
 	private String name;
 	
 	@Column(name="sex")
-	private int sex;
+	private Integer sex;
 	
 	@Column(name="date_of_birth")
 	private Date dateOfBirth;
@@ -41,10 +41,10 @@ public class Trainer extends JSONObject{
 	private String description;
 	
 	@Column(name="account_trainer_id")
-	private int accountId;
+	private Integer accountId;
 
-	public Trainer(int id, String avatar, String name, int sex, Date dateOfBirth, String phoneNumber, String email,
-			String description, int accountId) {
+	public Trainer(Integer id, String avatar, String name, Integer sex, Date dateOfBirth, String phoneNumber, String email,
+			String description, Integer accountId) {
 		super();
 		this.id = id;
 		this.avatar = avatar;
@@ -65,11 +65,11 @@ public class Trainer extends JSONObject{
 
 
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -89,11 +89,11 @@ public class Trainer extends JSONObject{
 		this.name = name;
 	}
 
-	public int getSex() {
+	public Integer getSex() {
 		return sex;
 	}
 
-	public void setSex(int sex) {
+	public void setSex(Integer sex) {
 		this.sex = sex;
 	}
 
@@ -129,11 +129,11 @@ public class Trainer extends JSONObject{
 		this.description = description;
 	}
 
-	public int getAccountId() {
+	public Integer getAccountId() {
 		return accountId;
 	}
 
-	public void setAccountId(int accountId) {
+	public void setAccountId(Integer accountId) {
 		this.accountId = accountId;
 	}
 	

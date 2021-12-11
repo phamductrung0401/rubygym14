@@ -16,7 +16,7 @@ public class AccountStudent {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
-	private int id;
+	private Integer id;
 	
 	@Column(name = "username")
 	private String username;
@@ -25,16 +25,16 @@ public class AccountStudent {
 	private String password;
 	
 	@Column(name = "accumulation")
-	private int accumulation;
+	private Integer accumulation;
 	
 	@Column(name = "expire")
 	private LocalDate expireDate;
 	
 	@Column(name = "service_id")
-	private int serviceId;
+	private Integer serviceId;
 
-	public AccountStudent(int id, String username, String password, int accumulation, LocalDate expireDate,
-			int serviceId) {
+	public AccountStudent(Integer id, String username, String password, Integer accumulation, LocalDate expireDate,
+			Integer serviceId) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -48,11 +48,11 @@ public class AccountStudent {
 		
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -72,11 +72,11 @@ public class AccountStudent {
 		this.password = password;
 	}
 
-	public int getAccumulation() {
+	public Integer getAccumulation() {
 		return accumulation;
 	}
 
-	public void setAccumulation(int accumulation) {
+	public void setAccumulation(Integer accumulation) {
 		this.accumulation = accumulation;
 	}
 
@@ -88,11 +88,11 @@ public class AccountStudent {
 		this.expireDate = expireDate;
 	}
 
-	public int getServiceId() {
+	public Integer getServiceId() {
 		return serviceId;
 	}
 
-	public void setServiceId(int serviceId) {
+	public void setServiceId(Integer serviceId) {
 		this.serviceId = serviceId;
 	}
 	

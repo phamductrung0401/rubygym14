@@ -14,13 +14,13 @@ public class TrainerStudent {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
-	private int id;
+	private Integer id;
 	
 	@Column(name="trainer_id")
-	private int trainerId;
+	private Integer trainerId;
 	
 	@Column(name="student_id")
-	private int studentId;
+	private Integer studentId;
 	
 	@Column(name="route")
 	private String route;
@@ -28,7 +28,7 @@ public class TrainerStudent {
 	@Column(name="comment")
 	private String comment;
 
-	public TrainerStudent(int id, int trainerId, int studentId, String route, String comment) {
+	public TrainerStudent(Integer id, Integer trainerId, Integer studentId, String route, String comment) {
 		super();
 		this.id = id;
 		this.trainerId = trainerId;
@@ -41,27 +41,27 @@ public class TrainerStudent {
 		
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getTrainerId() {
+	public Integer getTrainerId() {
 		return trainerId;
 	}
 
-	public void setTrainerId(int trainerId) {
+	public void setTrainerId(Integer trainerId) {
 		this.trainerId = trainerId;
 	}
 
-	public int getStudentId() {
+	public Integer getStudentId() {
 		return studentId;
 	}
 
-	public void setStudentId(int studentId) {
+	public void setStudentId(Integer studentId) {
 		this.studentId = studentId;
 	}
 

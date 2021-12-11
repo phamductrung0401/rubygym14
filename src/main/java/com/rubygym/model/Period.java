@@ -16,10 +16,10 @@ public class Period {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
-	private int id;
+	private Integer id;
 	
 	@Column(name="trainer_student_id")
-	private int trainerStudentId;
+	private Integer trainerStudentId;
 	
 	@Column(name="start")
 	private LocalDateTime start;
@@ -33,7 +33,7 @@ public class Period {
 	@Column(name="note")
 	private String note;
 
-	public Period(int id, int trainerStudentId, LocalDateTime start, LocalDateTime finish, String content,
+	public Period(Integer id, Integer trainerStudentId, LocalDateTime start, LocalDateTime finish, String content,
 			String note) {
 		super();
 		this.id = id;
@@ -49,19 +49,19 @@ public class Period {
 	}
 
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getTrainerStudentId() {
+	public Integer getTrainerStudentId() {
 		return trainerStudentId;
 	}
 
-	public void setTrainerStudentId(int trainerStudentId) {
+	public void setTrainerStudentId(Integer trainerStudentId) {
 		this.trainerStudentId = trainerStudentId;
 	}
 

@@ -18,10 +18,10 @@ public class Time {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
-	private int id;
+	private Integer id;
 	
 	@Column(name = "date_of_week")
-	private int dateOfWeek;
+	private Integer dayOfWeek;
 	
 	@Column(name = "start")
 	private LocalTime start;
@@ -29,12 +29,12 @@ public class Time {
 	@Column(name = "finish")
 	private LocalTime finish;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public int getDateOfWeek() {
-		return dateOfWeek;
+	public Integer getDayOfWeek() {
+		return dayOfWeek;
 	}
 
 	public LocalTime getStart() {
@@ -47,8 +47,8 @@ public class Time {
 
 	@Override
 	public String toString() {
-		return "{" + "\"id\":" + id 
-				+ ",\"dateOfWeek\":" + dateOfWeek 
+		return "{" + "\"timeId\":" + id 
+				+ ",\"dayOfWeek\":" + dayOfWeek 
 				+ ",\"start\":" + start 
 				+ ",\"finish\":" + finish + "}";
 	}
@@ -57,7 +57,7 @@ public class Time {
 		
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("id", id);
-		jsonObject.put("dayOfWeek", dateOfWeek);
+		jsonObject.put("dayOfWeek", dayOfWeek);
 		jsonObject.put("start", start);
 		jsonObject.put("finish", finish);
 		return null;

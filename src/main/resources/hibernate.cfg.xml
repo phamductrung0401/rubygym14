@@ -32,5 +32,6 @@
         <mapping class="com.rubygym.model.Student"></mapping>
         <mapping class="com.rubygym.model.TrainerStudent"></mapping>
         <mapping class="com.rubygym.model.Time"></mapping>
+        <mapping class="com.rubygym.model.Service"></mapping>
     </session-factory>
 </hibernate-configuration>

@@ -17,7 +17,7 @@ public class Student {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
-	private int id;
+	private Integer id;
 	
 	@Column(name="avatar")
 	private String avatar;
@@ -26,7 +26,7 @@ public class Student {
 	private String name;
 	
 	@Column(name="sex")
-	private int sex;
+	private Integer sex;
 	
 	@Column(name="date_of_birth")
 	private LocalDate dateOfBirth;
@@ -56,10 +56,10 @@ public class Student {
 	private String target;
 	
 	@Column(name="account_student_id")
-	private int accountId;
+	private Integer accountId;
 
-	public Student(int id, String avatar, String name, int sex, LocalDate dateOfBirth, String phoneNumber, String email,
-			String description, float weight, float height, float bmi, String others, String target, int accountId) {
+	public Student(Integer id, String avatar, String name, Integer sex, LocalDate dateOfBirth, String phoneNumber, String email,
+			String description, float weight, float height, float bmi, String others, String target, Integer accountId) {
 		super();
 		this.id = id;
 		this.avatar = avatar;
@@ -81,11 +81,11 @@ public class Student {
 		
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -105,11 +105,11 @@ public class Student {
 		this.name = name;
 	}
 
-	public int getSex() {
+	public Integer getSex() {
 		return sex;
 	}
 
-	public void setSex(int sex) {
+	public void setSex(Integer sex) {
 		this.sex = sex;
 	}
 
@@ -185,11 +185,11 @@ public class Student {
 		this.target = target;
 	}
 
-	public int getAccountId() {
+	public Integer getAccountId() {
 		return accountId;
 	}
 
-	public void setAccountId(int accountId) {
+	public void setAccountId(Integer accountId) {
 		this.accountId = accountId;
 	}
 	

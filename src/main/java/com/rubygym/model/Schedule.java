@@ -14,18 +14,24 @@ public class Schedule {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Id
 	@Column(name="id")
-	private int id;
+	private Integer id;
 	
 	@Column(name="trainer_student_id")
-	private int trainerStudentId;
+	private Integer trainerStudentId;
 	
 	@Column(name = "time_id")
-	private int timeId;
+	private Integer timeId;
 
 
-	public Schedule(int id, int trainerStudentId, int timeId) {
+	public Schedule(Integer id, Integer trainerStudentId, Integer timeId) {
 		super();
 		this.id = id;
+		this.trainerStudentId = trainerStudentId;
+		this.timeId = timeId;
+	}
+	
+	public Schedule(Integer trainerStudentId, Integer timeId) {
+
 		this.trainerStudentId = trainerStudentId;
 		this.timeId = timeId;
 	}
@@ -34,27 +40,27 @@ public class Schedule {
 		
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getTrainerStudentId() {
+	public Integer getTrainerStudentId() {
 		return trainerStudentId;
 	}
 
-	public void setTrainerStudentId(int trainerStudentId) {
+	public void setTrainerStudentId(Integer trainerStudentId) {
 		this.trainerStudentId = trainerStudentId;
 	}
 
-	public int getTimeId() {
+	public Integer getTimeId() {
 		return timeId;
 	}
 
-	public void setTimeId(int timeId) {
+	public void setTimeId(Integer timeId) {
 		this.timeId = timeId;
 	}
 	
