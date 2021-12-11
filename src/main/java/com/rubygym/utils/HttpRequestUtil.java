@@ -2,11 +2,12 @@ package com.rubygym.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.net.URLDecoder;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -45,6 +46,7 @@ public class HttpRequestUtil {
 	//Lấy dữ liệu trong Body của 1 http request, tra ve Object => ep sang JSONObject
 	public static Object getBody(HttpServletRequest req) throws Exception {
 			BufferedReader br = req.getReader();
+		//	System.out.print(JSONValue.parse(readAllLines(br)).getClass());
 			return JSONValue.parse(readAllLines(br));
 	}	
 	
@@ -59,5 +61,20 @@ public class HttpRequestUtil {
 	    }
 
 	    return content.toString();
+	}
+	
+	public static String[] getQuery(HttpServletRequest req) throws Exception{
+		try {
+			String stringQuery = req.getQueryString();
+			if(stringQuery != null) {
+			return stringQuery.split("&");
+			}
+			else {
+				return null;
+			}
+		}
+		catch(Exception e) {
+			throw e;
+		}
 	}
 }

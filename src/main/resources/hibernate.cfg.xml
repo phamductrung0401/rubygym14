@@ -33,5 +33,11 @@
         <mapping class="com.rubygym.model.TrainerStudent"></mapping>
         <mapping class="com.rubygym.model.Time"></mapping>
         <mapping class="com.rubygym.model.Service"></mapping>
+        
+<!--         <property name="hibernate.connection.password">asd123asd123</property>
+        <property name="hibernate.connection.url">jdbc:mysql://103.97.125.254:3306/jwrdogbp_rubygym</property>
+        <property name="hibernate.connection.username">jwrdogbp_admin</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property> -->
+
     </session-factory>
 </hibernate-configuration>

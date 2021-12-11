@@ -1,13 +1,8 @@
 package com.rubygym.utils;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import com.rubygym.model.Schedule;
 
 public class HibernateUtil {
 	

@@ -1,6 +1,6 @@
 package com.rubygym.model;
-import java.io.Serializable;
-import java.sql.Date;
+
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,7 +29,7 @@ public class Trainer extends JSONObject{
 	private Integer sex;
 	
 	@Column(name="date_of_birth")
-	private Date dateOfBirth;
+	private LocalDate dateOfBirth;
 	
 	@Column(name="phone_number")
 	private String phoneNumber;
@@ -43,7 +43,7 @@ public class Trainer extends JSONObject{
 	@Column(name="account_trainer_id")
 	private Integer accountId;
 
-	public Trainer(Integer id, String avatar, String name, Integer sex, Date dateOfBirth, String phoneNumber, String email,
+	public Trainer(Integer id, String avatar, String name, Integer sex, LocalDate dateOfBirth, String phoneNumber, String email,
 			String description, Integer accountId) {
 		super();
 		this.id = id;
@@ -64,8 +64,7 @@ public class Trainer extends JSONObject{
 	}
 
 
-
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 
@@ -97,11 +96,11 @@ public class Trainer extends JSONObject{
 		this.sex = sex;
 	}
 
-	public Date getDateOfBirth() {
+	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(Date dateOfBirth) {
+	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
