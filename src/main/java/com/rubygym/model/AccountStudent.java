@@ -1,61 +1,101 @@
 package com.rubygym.model;
-import java.io.Serializable;
-import java.sql.Date;
+
+import java.time.LocalDate;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
-
-import org.json.simple.JSONObject;
-@Entity(name="account_student")
-
-public class AccountStudent extends JSONObject{
+@Entity
+@Table(name = "account_student")
+public class AccountStudent {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	@Column(name="id")
+	private Integer id;
+	
+	@Column(name = "username")
 	private String username;
+	
+	@Column(name = "password")
 	private String password;
-	private int accumulation;
-	private Date expire;
-	private int service_id;
-	public int getId() {
+	
+	@Column(name = "accumulation")
+	private Integer accumulation;
+	
+	@Column(name = "expire")
+	private LocalDate expireDate;
+	
+	@Column(name = "service_id")
+	private Integer serviceId;
+
+	public AccountStudent(Integer id, String username, String password, Integer accumulation, LocalDate expireDate,
+			Integer serviceId) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.accumulation = accumulation;
+		this.expireDate = expireDate;
+		this.serviceId = serviceId;
+	}
+	
+	public AccountStudent() {
+		
+	}
+
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getUsername() {
 		return username;
 	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public int getAccumulation() {
+
+	public Integer getAccumulation() {
 		return accumulation;
 	}
-	public void setAccumulation(int accumulation) {
+
+	public void setAccumulation(Integer accumulation) {
 		this.accumulation = accumulation;
 	}
-	public Date getExpire() {
-		return expire;
-	}
-	public void setExpire(Date expire) {
-		this.expire = expire;
-	}
-	public int getService_id() {
-		return service_id;
-	}
-	public void setService_id(int service_id) {
-		this.service_id = service_id;
+
+	public LocalDate getExpireDate() {
+		return expireDate;
 	}
 
+	public void setExpireDate(LocalDate expireDate) {
+		this.expireDate = expireDate;
+	}
 
-}
+	public Integer getServiceId() {
+		return serviceId;
+	}
+
+	public void setServiceId(Integer serviceId) {
+		this.serviceId = serviceId;
+	}
 	
+	
+}
+

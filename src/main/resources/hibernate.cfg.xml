@@ -3,15 +3,41 @@
 		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
 		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
+
     <session-factory>
+		<!-- JDBC Database connection settings  -->
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.password">asd123asd123</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">1234</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/rubygym?enabledTLSProtocols=TLSv1.2</property>
+        
+   <!--      JDBC connection pool settings ... using built-in test pool
+        <property name="connection.pool_size">1</property>
+        
+        Select SQL dialect
+    	<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        
+        Echo the SQL to stdout
+        <property name="show_sql">true</property>
+        
+        Set the current session context
+        <property name="current_session_context_class">thread</property> -->
+        
+        <mapping class="com.rubygym.model.AccountStudent"></mapping>
+        <mapping class="com.rubygym.model.AccountTrainer"></mapping>
+        <mapping class="com.rubygym.model.Requirement"></mapping>
+        <mapping class="com.rubygym.model.Schedule"></mapping>
+        <mapping class="com.rubygym.model.Period"></mapping>
+        <mapping class="com.rubygym.model.Trainer"></mapping>
+        <mapping class="com.rubygym.model.Student"></mapping>
+        <mapping class="com.rubygym.model.TrainerStudent"></mapping>
+        <mapping class="com.rubygym.model.Time"></mapping>
+        <mapping class="com.rubygym.model.Service"></mapping>
+        
+<!--         <property name="hibernate.connection.password">asd123asd123</property>
         <property name="hibernate.connection.url">jdbc:mysql://103.97.125.254:3306/jwrdogbp_rubygym</property>
         <property name="hibernate.connection.username">jwrdogbp_admin</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <mapping class="com.rubygym.model.Trainer"></mapping>
-        <mapping class="com.rubygym.model.AccountTrainer"></mapping>
-        <mapping class="com.rubygym.model.AccountStudent"></mapping>
-        <mapping class="com.rubygym.model.Student"></mapping>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property> -->
+
     </session-factory>
 </hibernate-configuration>

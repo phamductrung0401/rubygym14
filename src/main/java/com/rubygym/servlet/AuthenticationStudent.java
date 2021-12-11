@@ -24,9 +24,11 @@ import org.json.simple.JSONObject;
 import com.rubygym.model.*;
 import com.rubygym.utils.*;
 @WebServlet("/authentication-student")
-public class authenticationStudent extends HttpServlet {
+public class AuthenticationStudent extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	static SessionFactory factory = HibernateUtil.getSessionFactory();
+	
+	// check đăng nhập cho student và trả về thông tin cá nhân cho client, sở hữu tài khoản nầy (nếu tồn tại)
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try {
 			Session session = factory.openSession();
@@ -71,11 +73,11 @@ public class authenticationStudent extends HttpServlet {
 				jo.put("avatar", temp.getAvatar());
 				jo.put("name", temp.getName());
 				jo.put("sex", temp.getSex());
-				jo.put("date_of_birth", (temp.getDate_of_birth() == null)? null : temp.getDate_of_birth().toString());
-				jo.put("phone_nunmber", temp.getPhone_number());
+				jo.put("date_of_birth", (temp.getDateOfBirth() == null)? null : temp.getDateOfBirth().toString());
+				jo.put("phone_nunmber", temp.getPhoneNumber());
 				jo.put("email", temp.getEmail());
 				jo.put("description", temp.getDescription());
-				jo.put("account_trainer_id", temp.getAccount_student_id());
+				jo.put("account_trainer_id", temp.getAccountId());
 				((ArrayList) data).add(jo);
 			}
 			bodyJsonResponse.put("data", data);

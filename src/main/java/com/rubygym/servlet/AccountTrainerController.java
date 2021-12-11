@@ -1,7 +1,7 @@
 package com.rubygym.servlet;
+
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -25,11 +25,11 @@ import com.rubygym.model.*;
 import com.rubygym.utils.*;
 
 
-
-@WebServlet("/trainer")
-public class trainerController extends HttpServlet  {
+@WebServlet("/account-trainer")
+public class AccountTrainerController extends HttpServlet  {
 	private static final long serialVersionUID = 1L;
 	static SessionFactory factory = HibernateUtil.getSessionFactory();
+	// admin đăng ký tài khoản mới cho trainer (do admin thực hiện)
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try {
 			Session session = factory.openSession();
@@ -37,31 +37,59 @@ public class trainerController extends HttpServlet  {
 			
 			//đọc body của http request
 			JSONObject t =  (JSONObject) HttpRequestUtil.getBody(req);
-			Trainer newTrainer = new Trainer();
-			if (t.get("avatar") != null) newTrainer.setAvatar((String) t.get("avatar"));
-			if (t.get("name") != null)newTrainer.setName((String) t.get("name"));
-			if (t.get("sex") != null) newTrainer.setSex((int) t.get("sex"));
-			if (t.get("date_of_birth") != null)newTrainer.setDate_of_birth(null);
-			if (t.get("phone_number") != null)newTrainer.setPhone_number((String) t.get("phone_number"));
-			if (t.get("email") != null)newTrainer.setEmail((String) t.get("email"));
-			if (t.get("description") != null)newTrainer.setDescription((String) t.get("description"));
-			if (t.get("account_trainer_id") != null) newTrainer.setAccount_trainer_id( ((Long) t.get("account_trainer_id")).intValue());
-			session.save(newTrainer);
+			System.out.print(t.toJSONString());
+			AccountTrainer newAccountTrainer = new AccountTrainer();
+			if (t.get("username") != null) newAccountTrainer.setUsername((String) t.get("username"));
+			else {
+				throw new Exception("Không được để trống tên tài khoản");
+			}
+			if (t.get("password") != null) newAccountTrainer.setPassword((String) t.get("password"));
+			else {
+				throw new Exception("Không được để trống mật khẩu");
+			}
+			//Kiểm tra xem đã tồn tại tại khoản trên chưa
+			CriteriaBuilder cb = session.getCriteriaBuilder();
+			CriteriaQuery<AccountTrainer> cr = cb.createQuery(AccountTrainer.class);
+			Root<AccountTrainer> root  = cr.from(AccountTrainer.class);
+			cr.where(root.get("username").in(t.get("username")));		
+			List<AccountTrainer> result = session.createQuery(cr).getResultList();
+			System.out.print(result.toString());
+			if(result.size() > 0) {
+				throw new Exception("Tài khoản này đã tồn tại");
+			}
+			
+			session.save(newAccountTrainer); // tạo tài khoản lưu vào DB
 			tx.commit();
 			
+			//Lấy thông tin tài khoản vừa tạo
+			cb = session.getCriteriaBuilder();
+			CriteriaQuery<AccountTrainer> cr1 = cb.createQuery(AccountTrainer.class);
+			Root<AccountTrainer> root1  = cr1.from(AccountTrainer.class);
+			cr1.where(root1.get("username").in(t.get("username")));		
+			List<AccountTrainer> result1 = session.createQuery(cr1).getResultList();
 			
-			//gửi http response về cho client
+			//Gửi thông tin tài khoản vừa tạo về cho client
 			JSONObject bodyJsonResponse = new JSONObject();
+			JSONArray data = new JSONArray();
+			for(AccountTrainer temp:result1) {
+				JSONObject jo = new JSONObject();
+				jo.put("id", temp.getId());
+				jo.put("username", temp.getUsername());
+				jo.put("password", temp.getPassword());
+				((ArrayList) data).add(jo);
+			}
+			bodyJsonResponse.put("data", data);
 			bodyJsonResponse.put("error", "null");
-			bodyJsonResponse.put("data", "null");
 			String bodyStringResponse = bodyJsonResponse.toJSONString();
 			PrintWriter out = res.getWriter();
 		    res.setContentType("application/json");
 		    res.setCharacterEncoding("UTF-8");
 		    out.print(bodyStringResponse);
-		    out.flush();  					
+		    out.flush(); 
+							
 			
 		} catch (Exception e) {
+			System.out.print(e.getMessage());
 			JSONObject bodyJsonResponse = new JSONObject();
 			bodyJsonResponse.put("error", e.getMessage());
 			JSONArray errors = new JSONArray();
@@ -76,14 +104,16 @@ public class trainerController extends HttpServlet  {
 		    out.flush();  				
 		}
 	}
+	
+	// admin lấy thông tin tài khoản: username, password của tất cả trainer (trên tài khoản của admin)
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		try {
 			Session session = factory.openSession();
 			Transaction tx = session.beginTransaction();
 			String[] criteria_array = HttpRequestUtil.getQuery(req);
 			CriteriaBuilder cb = session.getCriteriaBuilder();
-			CriteriaQuery<Trainer> cr = cb.createQuery(Trainer.class);
-			Root<Trainer> root  = cr.from(Trainer.class);
+			CriteriaQuery<AccountTrainer> cr = cb.createQuery(AccountTrainer.class);
+			Root<AccountTrainer> root  = cr.from(AccountTrainer.class);
 			if(criteria_array != null) {
 				for(int i=0;i<criteria_array.length;i++) {
 					System.out.print(criteria_array[i].split("=")[0]);
@@ -91,23 +121,15 @@ public class trainerController extends HttpServlet  {
 					cr.where(root.get(criteria_array[i].split("=")[0]).in(criteria_array[i].split("=")[1]));
 				}
 			}
-			List<Trainer> result = session.createQuery(cr).getResultList();
-			
-			for(Trainer temp:result) {
-				System.out.print(temp.getName());
-			}
+			List<AccountTrainer> result = session.createQuery(cr).getResultList();
+			System.out.print(result.get(0).getUsername().toString());
 			JSONObject bodyJsonResponse = new JSONObject();
 			JSONArray data = new JSONArray();
-			for(Trainer temp:result) {
+			for(AccountTrainer temp:result) {
 				JSONObject jo = new JSONObject();
 				jo.put("id", temp.getId());
-				jo.put("avatar", temp.getAvatar());
-				jo.put("name", temp.getName());
-				jo.put("sex", temp.getSex());
-				jo.put("date_of_birth", temp.getDate_of_birth());
-				jo.put("phone_number", temp.getPhone_number());
-				jo.put("description", temp.getDescription());
-				jo.put("account_trainer_id", temp.getAccount_trainer_id());
+				jo.put("username", temp.getUsername());
+				jo.put("password", temp.getPassword());
 				((ArrayList) data).add(jo);
 			}
 			bodyJsonResponse.put("data", data);
@@ -134,6 +156,8 @@ public class trainerController extends HttpServlet  {
 		    out.flush();  		
 		}
 	}
+	
+	// trainer sửa mật khẩu của mình (do trainer thực hiện chức năng đổi mật khẩu)
 	protected void doPut(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try {
 			Session session = factory.openSession();
@@ -141,27 +165,21 @@ public class trainerController extends HttpServlet  {
 			
 			//đọc body của http request
 			JSONObject t =  (JSONObject) HttpRequestUtil.getBody(req);
-			Trainer newTrainer = new Trainer();
+			AccountTrainer newAccountTrainer = new AccountTrainer();
 		
 			Long temp = (Long) t.get("id");
 			
 			CriteriaBuilder cb = session.getCriteriaBuilder();
-			CriteriaQuery<Trainer> cr = cb.createQuery(Trainer.class);
-			Root<Trainer> root  = cr.from(Trainer.class);			
+			CriteriaQuery<AccountTrainer> cr = cb.createQuery(AccountTrainer.class);
+			Root<AccountTrainer> root  = cr.from(AccountTrainer.class);			
 			cr.where(root.get("id").in(temp.intValue()));
-			List<Trainer> result = session.createQuery(cr).getResultList();
-			newTrainer = result.get(0);		
+			List<AccountTrainer> result = session.createQuery(cr).getResultList();
+			newAccountTrainer = result.get(0);		
 
-			if (t.get("avatar") != null) newTrainer.setAvatar((String) t.get("avatar"));
-			if (t.get("name") != null)newTrainer.setName((String) t.get("name"));
-			if (t.get("sex") != null) newTrainer.setSex((int) t.get("sex"));
-			if (t.get("date_of_birth") != null)newTrainer.setDate_of_birth(Date.valueOf((String) t.get("date_of_birth")));
-			if (t.get("phone_number") != null)newTrainer.setPhone_number((String) t.get("phone_number"));
-			if (t.get("email") != null)newTrainer.setEmail((String) t.get("email"));
-			if (t.get("description") != null)newTrainer.setDescription((String) t.get("description"));
-			if (t.get("account_trainer_id") != null)newTrainer.setAccount_trainer_id( ((Long) t.get("account_trainer_id")).intValue());
-			session.update(newTrainer);
+			if (t.get("password") != null) newAccountTrainer.setPassword((String) t.get("password"));
+			session.update(newAccountTrainer);
 			tx.commit();
+			
 			
 			
 			//gửi http response về cho client
