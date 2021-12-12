@@ -64,7 +64,7 @@ public class AuthenticationTrainer extends HttpServlet {
 			cb = session.getCriteriaBuilder();
 			CriteriaQuery<Trainer> cr1 = cb.createQuery(Trainer.class);
 			Root<Trainer> root1 = cr1.from(Trainer.class);
-			cr1.where(root1.get("account_trainer_id").in(result.get(0).getId()));
+			cr1.where(root1.get("accountId").in(result.get(0).getId()));
 			List<Trainer> result1 = session.createQuery(cr1).getResultList();
 			// System.out.print(result1.toString());
 			System.out.print(result1.get(0).getName());

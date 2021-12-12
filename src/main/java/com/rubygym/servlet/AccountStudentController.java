@@ -1,6 +1,7 @@
 package com.rubygym.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -41,7 +42,11 @@ public class AccountStudentController extends HttpServlet  {
 			else {
 				throw new Exception("Không được để trống tên tài khoản");
 			}
-			if (t.get("password") != null) newAccountStudent.setPassword((String) t.get("password"));
+			if (t.get("password") != null) { newAccountStudent.setPassword((String) t.get("password"));
+			newAccountStudent.setAccumulation(0);
+			newAccountStudent.setExpireDate(LocalDate.now());
+			}
+			
 			else {
 				throw new Exception("Không được để trống mật khẩu");
 			}
@@ -128,6 +133,9 @@ public class AccountStudentController extends HttpServlet  {
 				jo.put("id", temp.getId());
 				jo.put("username", temp.getUsername());
 				jo.put("password", temp.getPassword());
+				jo.put("accumulation", temp.getAccumulation());
+				jo.put("expire", temp.getExpireDate());
+				jo.put("service_id", temp.getServiceId());
 				((ArrayList) data).add(jo);
 			}
 			bodyJsonResponse.put("data", data);
@@ -180,6 +188,27 @@ public class AccountStudentController extends HttpServlet  {
 			newAccountStudent = result.get(0);		
 
 			if (t.get("password") != null) newAccountStudent.setPassword((String) t.get("password"));
+			//if (t.get("expire") != null) newAccountStudent.setExpireDate((LocalDate) LocalDate.parse((CharSequence) t.get("expire")));
+			//if (t.get("accumulation") != null) newAccountStudent.setAccumulation((Integer) t.get("accumulation"));
+			if (t.get("service_id") != null) {
+			newAccountStudent.setServiceId(((Long) t.get("service_id")).intValue());
+			
+			//tim kiem trong bang service record tuong ung voi service_id
+			CriteriaQuery<Service> cr1 = cb.createQuery(Service.class);
+			Root<Service> root1  = cr1.from(Service.class);			
+			cr.where(root.get("id").in(((Long) t.get("service_id")).intValue()));
+			List<Service> result1 = session.createQuery(cr1).getResultList();
+			if(result1.size()==0) {
+				throw new Exception("Không tồn tại gói tập");
+			}
+			else {	
+				newAccountStudent.setExpireDate( newAccountStudent.getExpireDate().plusMonths(result1.get(0).getnMonths()));
+			
+				newAccountStudent.setAccumulation( newAccountStudent.getAccumulation() + result1.get(0).getnMonths());
+			
+			}
+			}
+			//tim kiem trong bang service record tuong ung voi service_id end
 			session.update(newAccountStudent);
 			tx.commit();
 			
