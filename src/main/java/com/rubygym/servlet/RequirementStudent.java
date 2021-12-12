@@ -47,7 +47,7 @@ public class RequirementStudent extends HttpServlet {
 					Session session = HibernateUtil.getSessionFactory().openSession();
 					session.beginTransaction();
 					
-					list = session.createQuery("select r.timeId, r.scheduleId, r.category"
+					list = session.createQuery("select r.timeId, r.scheduleId, r.category, r.id"
 							+ " from Requirement r, TrainerStudent ts"
 							+ " where r.trainerStudentId = ts.id"
 							+ " and ts.studentId = " + Integer.parseInt(idString)).getResultList();
@@ -87,6 +87,7 @@ public class RequirementStudent extends HttpServlet {
 						tmp.put("oldTime", r[1]);
 						tmp.put("newTime", r[0]);
 						tmp.put("category", r[2]);
+						tmp.put("requireId", r[3]);
 						data.add(tmp);
 						
 					}
