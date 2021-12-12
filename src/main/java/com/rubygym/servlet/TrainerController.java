@@ -44,8 +44,8 @@ public class TrainerController extends HttpServlet  {
 			Trainer newTrainer = new Trainer();
 			if (t.get("avatar") != null) newTrainer.setAvatar((String) t.get("avatar"));
 			if (t.get("name") != null)newTrainer.setName((String) t.get("name"));
-			if (t.get("sex") != null) newTrainer.setSex((int) t.get("sex"));
-			if (t.get("date_of_birth") != null)newTrainer.setDateOfBirth(null);
+			if (t.get("sex") != null) newTrainer.setSex((String) t.get("sex"));
+			if (t.get("date_of_birth") != null)newTrainer.setDateOfBirth(LocalDate.parse(((String) t.get("date_of_birth")), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 			if (t.get("phone_number") != null)newTrainer.setPhoneNumber((String) t.get("phone_number"));
 			if (t.get("email") != null)newTrainer.setEmail((String) t.get("email"));
 			if (t.get("description") != null)newTrainer.setDescription((String) t.get("description"));
@@ -170,8 +170,8 @@ public class TrainerController extends HttpServlet  {
 
 			if (t.get("avatar") != null) newTrainer.setAvatar((String) t.get("avatar"));
 			if (t.get("name") != null)newTrainer.setName((String) t.get("name"));
-			if (t.get("sex") != null) newTrainer.setSex((int) t.get("sex"));
-			if (t.get("date_of_birth") != null)newTrainer.setDateOfBirth(LocalDate.parse(((String) t.get("date_of_birth")), DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+			if (t.get("sex") != null) newTrainer.setSex((String) t.get("sex"));
+			if (t.get("date_of_birth") != null)newTrainer.setDateOfBirth(LocalDate.parse(((String) t.get("date_of_birth")), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 			if (t.get("phone_number") != null)newTrainer.setPhoneNumber((String) t.get("phone_number"));
 			if (t.get("email") != null)newTrainer.setEmail((String) t.get("email"));
 			if (t.get("description") != null)newTrainer.setDescription((String) t.get("description"));

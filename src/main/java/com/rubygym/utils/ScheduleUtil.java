@@ -1,5 +1,7 @@
 package com.rubygym.utils;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,6 +17,41 @@ import net.bytebuddy.description.field.FieldDescription.InGenericShape;
 public class ScheduleUtil {
 	
 	private static SessionFactory factory = HibernateUtil.getSessionFactory();
+	
+	// xoá các thành phần của studentID hết hạn
+	public static void filterExpiredStudent(Integer studentId) throws Exception {
+		Integer trainerStudentId = TrainerStudentUtil.getTrainerStudentId(studentId);
+		
+		Session session = factory.openSession();
+		session.beginTransaction();
+		
+		session.createQuery("delete from Schedule s where s.trainerStudentId = " + trainerStudentId);
+		session.createQuery("delete from Requirement r where r.trainerStudentId = " + trainerStudentId);
+		session.createQuery("delete from TrainerStudent ts where ts.id = " + trainerStudentId);
+		
+		session.getTransaction().commit();
+		
+	}
+	
+	
+	// studentId lấy từ bảng TrainerStudent
+	public static boolean isExpired(Integer studentId, LocalDate checkDate) throws Exception {
+		Session session = factory.openSession();
+		session.beginTransaction();
+		
+		LocalDate expireDate = LocalDate.parse(session.createQuery("select acc.expireDate"
+				+ " from Student s, AccountStudent acc"
+				+ " where s.accountId = acc.id and s.id = " + studentId).uniqueResult().toString()
+				, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		
+		session.getTransaction().commit();
+		
+		if (expireDate.isBefore(checkDate)) return true; // đã hết hạn so với ngày check
+		return false;
+	}
+	
+	
+	
 	
 	// for requirement add/update, do tạo ra newTime
 	public static boolean isTimeIdValid(Integer timeId, Integer studentId) throws Exception {
@@ -257,8 +294,8 @@ public class ScheduleUtil {
 		session.beginTransaction();
 		
 		List<Object[]> list = session.createQuery("select s.id, t.dayOfWeek, t.start, t.finish" 
-				+ " from Schedule s, TrainerStudent ts, Time t, Trainer tr where"
-				+ " s.trainerStudentId = ts.id and s.timeId = t.id and ts.trainerId = tr.id and "
+				+ " from Schedule s, TrainerStudent ts, Time t where"
+				+ " s.trainerStudentId = ts.id and s.timeId = t.id and "
 				+ " ts.studentId = " + studentId).getResultList();
 		
 		session.getTransaction().commit();

@@ -10,8 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="period")
-public class Period {
+@Table(name="period_backup")
+public class PeriodBackup {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -35,7 +35,7 @@ public class Period {
 
 	
 	
-	public Period(Integer id, Integer trainerStudentId, Integer timeId, LocalDate pDate, String content, String note) {
+	public PeriodBackup(Integer id, Integer trainerStudentId, Integer timeId, LocalDate pDate, String content, String note) {
 		super();
 		this.id = id;
 		this.trainerStudentId = trainerStudentId;
@@ -44,18 +44,9 @@ public class Period {
 		this.content = content;
 		this.note = note;
 	}
-	
-	public Period( Integer trainerStudentId, Integer timeId, LocalDate pDate, String content, String note) {
-
-		this.trainerStudentId = trainerStudentId;
-		this.timeId = timeId;
-		this.pDate = pDate;
-		this.content = content;
-		this.note = note;
-	}
 
 
-	public Period() {
+	public PeriodBackup() {
 
 	}
 

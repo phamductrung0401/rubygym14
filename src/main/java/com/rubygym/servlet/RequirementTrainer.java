@@ -38,7 +38,7 @@ public class RequirementTrainer extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 		
-		if (HttpRequestUtil.checkAuthentication(req)) {
+//		if (HttpRequestUtil.checkAuthentication(req)) {
 			
 			try {
 				String idString = HttpRequestUtil.parseURL(req, "requirement-trainer");
@@ -110,12 +110,12 @@ public class RequirementTrainer extends HttpServlet {
 				HttpResponseUtil.setResponse(resp, data, error);
 			}
 		
-		}
-		else {
-			data.add(null);
-			error.add("Yêu cầu đăng nhập");
-			HttpResponseUtil.setResponse(resp, data, error);
-		}
+//		}
+//		else {
+//			data.add(null);
+//			error.add("Yêu cầu đăng nhập");
+//			HttpResponseUtil.setResponse(resp, data, error);
+//		}
 		
 	}
 	

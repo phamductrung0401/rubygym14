@@ -29,6 +29,7 @@
         <mapping class="com.rubygym.model.Requirement"></mapping>
         <mapping class="com.rubygym.model.Schedule"></mapping>
         <mapping class="com.rubygym.model.Period"></mapping>
+        <mapping class="com.rubygym.model.PeriodBackup"></mapping>
         <mapping class="com.rubygym.model.Trainer"></mapping>
         <mapping class="com.rubygym.model.Student"></mapping>
         <mapping class="com.rubygym.model.TrainerStudent"></mapping>

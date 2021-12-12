@@ -16,11 +16,12 @@ import org.json.simple.JSONValue;
 
 public class HttpRequestUtil {
 	
-	public static boolean checkAuthentication(HttpServletRequest req) {
-		if (req.getHeader("Authentication") != null)
-			return true;
-		return false;
-	}
+	// dành cho bảo mật => tạm thời bỏ qua
+//	public static boolean checkAuthentication(HttpServletRequest req) {
+//		if (req.getHeader("Authentication") != null)
+//			return true;
+//		return false;
+//	}
 	
 	// lấy 1 param từ URL
 	public static String parseURL(HttpServletRequest req, String servletName) {
