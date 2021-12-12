@@ -59,7 +59,7 @@ public class AuthenticationStudent extends HttpServlet {
 			cb = session.getCriteriaBuilder();
 			CriteriaQuery<Student> cr1 = cb.createQuery(Student.class);
 			Root<Student> root1  = cr1.from(Student.class);
-			cr1.where(root1.get("account_student_id").in(result.get(0).getId()));
+			cr1.where(root1.get("accountId").in(result.get(0).getId()));
 			List<Student> result1 = session.createQuery(cr1).getResultList();	
 			System.out.print(result1.toString());
 			System.out.print(result1.get(0).getName());
