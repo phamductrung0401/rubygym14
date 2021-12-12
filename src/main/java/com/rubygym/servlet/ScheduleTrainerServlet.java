@@ -41,7 +41,7 @@ public class ScheduleTrainerServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 		
-		if (HttpRequestUtil.checkAuthentication(req)) {
+//		if (HttpRequestUtil.checkAuthentication(req)) {
 			
 			try {
 				String idString = HttpRequestUtil.parseURL(req, "schedule-trainer"); // c1
@@ -71,7 +71,7 @@ public class ScheduleTrainerServlet extends HttpServlet {
 				
 				else {
 					data.add(null);
-					error.add("ID này không tồn tại trong hệ thống.");
+					error.add("ID này không tồn tại hoặc chưa được phân công trong hệ thống.");
 					HttpResponseUtil.setResponse(resp, data, error);
 				}
 				
@@ -85,14 +85,14 @@ public class ScheduleTrainerServlet extends HttpServlet {
 			}
 			
 			
-		}
-		
-		
-		else {
-			data.add(null);
-			error.add("Yêu cầu đăng nhập");
-			HttpResponseUtil.setResponse(resp, data, error);	
-		}
+//		}
+//		
+//		
+//		else {
+//			data.add(null);
+//			error.add("Yêu cầu đăng nhập");
+//			HttpResponseUtil.setResponse(resp, data, error);	
+//		}
 		
 	}
 	

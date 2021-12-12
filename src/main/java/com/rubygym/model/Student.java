@@ -26,7 +26,7 @@ public class Student {
 	private String name;
 	
 	@Column(name="sex")
-	private Integer sex;
+	private String sex;
 	
 	@Column(name="date_of_birth")
 	private LocalDate dateOfBirth;
@@ -41,13 +41,13 @@ public class Student {
 	private String description;
 	
 	@Column(name="weight")
-	private float weight;
+	private Double weight;
 	
 	@Column(name="height")
-	private float height;
+	private Double height;
 	
 	@Column(name="bmi")
-	private float bmi;
+	private Double bmi;
 	
 	@Column(name="others")
 	private String others;
@@ -58,8 +58,8 @@ public class Student {
 	@Column(name="account_student_id")
 	private Integer accountId;
 
-	public Student(Integer id, String avatar, String name, Integer sex, LocalDate dateOfBirth, String phoneNumber, String email,
-			String description, float weight, float height, float bmi, String others, String target, Integer accountId) {
+	public Student(Integer id, String avatar, String name, String sex, LocalDate dateOfBirth, String phoneNumber, String email,
+			String description, Double weight, Double height, Double bmi, String others, String target, Integer accountId) {
 		super();
 		this.id = id;
 		this.avatar = avatar;
@@ -105,11 +105,11 @@ public class Student {
 		this.name = name;
 	}
 
-	public Integer getSex() {
+	public String getSex() {
 		return sex;
 	}
 
-	public void setSex(Integer sex) {
+	public void setSex(String sex) {
 		this.sex = sex;
 	}
 
@@ -145,27 +145,27 @@ public class Student {
 		this.description = description;
 	}
 
-	public float getWeight() {
+	public Double getWeight() {
 		return weight;
 	}
 
-	public void setWeight(float weight) {
+	public void setWeight(Double weight) {
 		this.weight = weight;
 	}
 
-	public float getHeight() {
+	public Double getHeight() {
 		return height;
 	}
 
-	public void setHeight(float height) {
+	public void setHeight(Double height) {
 		this.height = height;
 	}
 
-	public float getBmi() {
+	public Double getBmi() {
 		return bmi;
 	}
 
-	public void setBmi(float bmi) {
+	public void setBmi(Double bmi) {
 		this.bmi = bmi;
 	}
 

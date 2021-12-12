@@ -26,7 +26,7 @@ public class Trainer extends JSONObject{
 	private String name;
 	
 	@Column(name="sex")
-	private Integer sex;
+	private String sex;
 	
 	@Column(name="date_of_birth")
 	private LocalDate dateOfBirth;
@@ -43,7 +43,7 @@ public class Trainer extends JSONObject{
 	@Column(name="account_trainer_id")
 	private Integer accountId;
 
-	public Trainer(Integer id, String avatar, String name, Integer sex, LocalDate dateOfBirth, String phoneNumber, String email,
+	public Trainer(Integer id, String avatar, String name, String sex, LocalDate dateOfBirth, String phoneNumber, String email,
 			String description, Integer accountId) {
 		super();
 		this.id = id;
@@ -88,11 +88,11 @@ public class Trainer extends JSONObject{
 		this.name = name;
 	}
 
-	public Integer getSex() {
+	public String getSex() {
 		return sex;
 	}
 
-	public void setSex(Integer sex) {
+	public void setSex(String sex) {
 		this.sex = sex;
 	}
 

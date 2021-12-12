@@ -38,7 +38,7 @@ public class RequirementStudent extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 		
-		if (HttpRequestUtil.checkAuthentication(req)) {
+//		if (HttpRequestUtil.checkAuthentication(req)) {
 			
 			try {
 				String idString = HttpRequestUtil.parseURL(req, "requirement-student");
@@ -107,13 +107,13 @@ public class RequirementStudent extends HttpServlet {
 				error.add(e.getMessage());
 				HttpResponseUtil.setResponse(resp, data, error);
 			}
-		
-		}
-		else {
-			data.add(null);
-			error.add("Yêu cầu đăng nhập");
-			HttpResponseUtil.setResponse(resp, data, error);
-		}
+			
+//		}
+//		else {
+//			data.add(null);
+//			error.add("Yêu cầu đăng nhập");
+//			HttpResponseUtil.setResponse(resp, data, error);
+//		}
 		
 	}
 	

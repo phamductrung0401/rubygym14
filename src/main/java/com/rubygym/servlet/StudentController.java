@@ -23,6 +23,7 @@ import org.hibernate.Transaction;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import com.google.protobuf.DoubleValue;
 import com.rubygym.model.*;
 import com.rubygym.utils.*;
 
@@ -44,14 +45,14 @@ public class StudentController extends HttpServlet  {
 			Student newStudent = new Student();
 			if (t.get("avatar") != null) newStudent.setAvatar((String) t.get("avatar"));
 			if (t.get("name") != null)newStudent.setName((String) t.get("name"));
-			if (t.get("sex") != null) newStudent.setSex((int) t.get("sex"));
-			if (t.get("date_of_birth") != null)newStudent.setDateOfBirth(LocalDate.parse(((String) t.get("date_of_birth")), DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+			if (t.get("sex") != null) newStudent.setSex((String) t.get("sex"));
+			if (t.get("date_of_birth") != null)newStudent.setDateOfBirth(LocalDate.parse(((String) t.get("date_of_birth")), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 			if (t.get("phone_number") != null)newStudent.setPhoneNumber((String) t.get("phone_number"));
 			if (t.get("email") != null)newStudent.setEmail((String) t.get("email"));
 			if (t.get("description") != null)newStudent.setDescription((String) t.get("description"));
-			if (t.get("weight") != null) newStudent.setWeight((float) t.get("weight"));
-			if (t.get("height") != null) newStudent.setHeight((float) t.get("height"));
-			if (t.get("bmi") != null) newStudent.setBmi((float) t.get("bmi"));
+			if (t.get("weight") != null) newStudent.setWeight((Double) t.get("weight"));
+			if (t.get("height") != null) newStudent.setHeight((Double) t.get("height"));
+			if (t.get("bmi") != null) newStudent.setBmi((Double) t.get("bmi"));
 			if (t.get("others") != null) newStudent.setOthers((String) t.get("others"));
 			if (t.get("target") != null) newStudent.setTarget((String) t.get("target"));
 			if (t.get("account_student_id") != null) newStudent.setAccountId( ((Long) t.get("account_student_id")).intValue());
@@ -181,14 +182,14 @@ public class StudentController extends HttpServlet  {
 
 			if (t.get("avatar") != null) newStudent.setAvatar((String) t.get("avatar"));
 			if (t.get("name") != null)newStudent.setName((String) t.get("name"));
-			if (t.get("sex") != null) newStudent.setSex((int) t.get("sex"));
-			if (t.get("date_of_birth") != null)newStudent.setDateOfBirth(LocalDate.parse(((String) t.get("date_of_birth")), DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+			if (t.get("sex") != null) newStudent.setSex((String) t.get("sex"));
+			if (t.get("date_of_birth") != null)newStudent.setDateOfBirth(LocalDate.parse(((String) t.get("date_of_birth")), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 			if (t.get("phone_number") != null)newStudent.setPhoneNumber((String) t.get("phone_number"));
 			if (t.get("email") != null)newStudent.setEmail((String) t.get("email"));
 			if (t.get("description") != null)newStudent.setDescription((String) t.get("description"));
-			if (t.get("height") != null)newStudent.setHeight(((Long) t.get("height")).floatValue());
-			if (t.get("weight") != null)newStudent.setWeight(((Long) t.get("weight")).floatValue());
-			if (t.get("bmi") != null)newStudent.setBmi(((Long) t.get("bmi")).floatValue());
+			if (t.get("height") != null)newStudent.setHeight(((Double) t.get("height")).doubleValue());
+			if (t.get("weight") != null)newStudent.setWeight(((Double) t.get("weight")).doubleValue());
+			if (t.get("bmi") != null)newStudent.setBmi(((Double) t.get("bmi")).doubleValue());
 			if (t.get("others") != null)newStudent.setOthers((String) t.get("others"));
 			if (t.get("target") != null)newStudent.setEmail((String) t.get("target"));
 			if (t.get("account_student_id") != null)newStudent.setAccountId(((Long) t.get("account_student_id")).intValue());
