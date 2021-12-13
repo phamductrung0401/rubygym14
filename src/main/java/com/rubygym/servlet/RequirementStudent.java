@@ -41,7 +41,7 @@ public class RequirementStudent extends HttpServlet {
 //		if (HttpRequestUtil.checkAuthentication(req)) {
 			
 			try {
-				res.addHeader("Access-Control-Allow-Origin", "*");
+				resp.addHeader("Access-Control-Allow-Origin", "*");
 				String idString = HttpRequestUtil.parseURL(req, "requirement-student");
 				if (ScheduleUtil.checkStudentId(Integer.parseInt(idString))) {
 					Session session = HibernateUtil.getSessionFactory().openSession();
@@ -101,7 +101,7 @@ public class RequirementStudent extends HttpServlet {
 				}
 				
 			} catch (Exception e) {
-				res.addHeader("Access-Control-Allow-Origin", "*");
+				resp.addHeader("Access-Control-Allow-Origin", "*");
 				// TODO: handle exception
 				e.printStackTrace();
 				
