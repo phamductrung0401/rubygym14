@@ -37,6 +37,7 @@ public class StudentController extends HttpServlet  {
 	// admin tạo mới 1 student, cập nhật account_student_id vào thông tin cá nhân
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			Session session = factory.openSession();
 			Transaction tx = session.beginTransaction();
 			
@@ -168,6 +169,7 @@ public class StudentController extends HttpServlet  {
 	// student sửa thông tin cá nhân của 1 student theo Id
 	protected void doPut(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			Session session = factory.openSession();
 			Transaction tx = session.beginTransaction();
 			
@@ -213,6 +215,7 @@ public class StudentController extends HttpServlet  {
 		    out.flush();  					
 			
 		} catch (Exception e) {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			JSONObject bodyJsonResponse = new JSONObject();
 			bodyJsonResponse.put("error", e.getMessage());
 			JSONArray errors = new JSONArray();

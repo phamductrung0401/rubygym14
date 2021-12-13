@@ -34,6 +34,7 @@ public class TrainerStudentController extends HttpServlet{
 	// admin đăng ký tài khoản của student
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			Session session = factory.openSession();
 			Transaction tx = session.beginTransaction();
 			
@@ -65,6 +66,7 @@ public class TrainerStudentController extends HttpServlet{
 		    out.flush();  				
 		}
 		catch(Exception e) {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			System.out.print(e.getMessage());
 			JSONObject bodyJsonResponse = new JSONObject();
 			bodyJsonResponse.put("error", e.getMessage());
@@ -82,6 +84,7 @@ public class TrainerStudentController extends HttpServlet{
 	}
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		try {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			Session session = factory.openSession();
 			Transaction tx = session.beginTransaction();
 			String[] criteria_array = HttpRequestUtil.getQuery(req);
@@ -118,6 +121,7 @@ public class TrainerStudentController extends HttpServlet{
 		    out.flush(); 
 		}
 		catch(Exception e) {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			JSONObject bodyJsonResponse = new JSONObject();
 			bodyJsonResponse.put("error", e.getMessage());
 			JSONArray errors = new JSONArray();
@@ -134,6 +138,7 @@ public class TrainerStudentController extends HttpServlet{
 	}
 	protected void doPut(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			Session session = factory.openSession();
 			Transaction tx = session.beginTransaction();
 			
@@ -171,6 +176,7 @@ public class TrainerStudentController extends HttpServlet{
 		    out.flush();  					
 			
 		} catch (Exception e) {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			JSONObject bodyJsonResponse = new JSONObject();
 			bodyJsonResponse.put("error", e.getMessage());
 			JSONArray errors = new JSONArray();
@@ -187,6 +193,7 @@ public class TrainerStudentController extends HttpServlet{
 	}
 	protected void doDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			Session session = factory.openSession();
 			Transaction tx = session.beginTransaction();
 			
@@ -212,6 +219,7 @@ public class TrainerStudentController extends HttpServlet{
 		    out.flush();  					
 			
 		} catch (Exception e) {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			JSONObject bodyJsonResponse = new JSONObject();
 			bodyJsonResponse.put("error", e.getMessage());
 			JSONArray errors = new JSONArray();

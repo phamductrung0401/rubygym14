@@ -29,6 +29,7 @@ public class PeriodGenThread implements Runnable {
 	public void run() {
 		
 		try {
+			
 			LocalDate now = LocalDate.now(); // ngày chủ nhật sẽ chạy gen tự động
 			
 			// tạo period vào database

@@ -41,6 +41,7 @@ public class RequirementTrainer extends HttpServlet {
 //		if (HttpRequestUtil.checkAuthentication(req)) {
 			
 			try {
+				res.addHeader("Access-Control-Allow-Origin", "*");
 				String idString = HttpRequestUtil.parseURL(req, "requirement-trainer");
 				if (ScheduleUtil.checkTrainerId(Integer.parseInt(idString))) {
 					Session session = HibernateUtil.getSessionFactory().openSession();
@@ -102,6 +103,7 @@ public class RequirementTrainer extends HttpServlet {
 				}
 				
 			} catch (Exception e) {
+				res.addHeader("Access-Control-Allow-Origin", "*");
 				// TODO: handle exception
 				e.printStackTrace();
 				
@@ -130,7 +132,7 @@ public class RequirementTrainer extends HttpServlet {
 		String idString = HttpRequestUtil.parseURL(req, "requirement-trainer");
 		
 		try {
-			
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			JSONObject jsonObject = (JSONObject) HttpRequestUtil.getBody(req);
 			long action = (long) jsonObject.get("action");
 			Integer requireId = Integer.parseInt(jsonObject.get("requireId").toString());
@@ -214,6 +216,7 @@ public class RequirementTrainer extends HttpServlet {
 			HttpResponseUtil.setResponse(resp, data, error);
 			
 		} catch (Exception e) {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			// TODO: handle exception
 			e.printStackTrace();
 			

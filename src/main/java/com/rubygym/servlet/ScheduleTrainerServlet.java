@@ -44,6 +44,7 @@ public class ScheduleTrainerServlet extends HttpServlet {
 //		if (HttpRequestUtil.checkAuthentication(req)) {
 			
 			try {
+				res.addHeader("Access-Control-Allow-Origin", "*");
 				String idString = HttpRequestUtil.parseURL(req, "schedule-trainer"); // c1
 				
 				// c2: truy van tren query string:
@@ -76,6 +77,7 @@ public class ScheduleTrainerServlet extends HttpServlet {
 				}
 				
 			} catch (Exception e) {
+				res.addHeader("Access-Control-Allow-Origin", "*");
 				// TODO: handle exception
 				e.printStackTrace();
 				
@@ -105,6 +107,7 @@ public class ScheduleTrainerServlet extends HttpServlet {
 		String idString = HttpRequestUtil.parseURL(req, "schedule-trainer");
 		
 		try {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			System.out.println("checkPOST?");
 			JSONObject dataClient = (JSONObject) HttpRequestUtil.getBody(req);
 			Integer requireId = Integer.parseInt(dataClient.get("requireId").toString());
@@ -160,6 +163,7 @@ public class ScheduleTrainerServlet extends HttpServlet {
 		}
 		
 		catch (Exception e) {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			// TODO: handle exception
 			e.printStackTrace();
 			error.add(e.getMessage());
@@ -178,6 +182,7 @@ public class ScheduleTrainerServlet extends HttpServlet {
 		String idString = HttpRequestUtil.parseURL(req, "schedule-trainer");
 		
 		try {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			System.out.println("checkUPDATE?");
 			JSONObject dataClient = (JSONObject) HttpRequestUtil.getBody(req);
 			Integer requireId = Integer.parseInt(dataClient.get("requireId").toString());
@@ -235,6 +240,7 @@ public class ScheduleTrainerServlet extends HttpServlet {
 			
 		}
 		catch (Exception e) {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			// TODO: handle exception
 			e.printStackTrace();
 			error.add(e.getMessage());
@@ -253,6 +259,7 @@ public class ScheduleTrainerServlet extends HttpServlet {
 		String idString = HttpRequestUtil.parseURL(req, "schedule-trainer");
 		
 		try {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			System.out.println("checkDELETE?");
 			JSONObject dataClient = (JSONObject) HttpRequestUtil.getBody(req);
 			Integer requireId = Integer.parseInt(dataClient.get("requireId").toString());
@@ -272,6 +279,7 @@ public class ScheduleTrainerServlet extends HttpServlet {
 			HttpResponseUtil.setResponse(resp, data, error);
 		}
 		catch (Exception e) {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			// TODO: handle exception
 			e.printStackTrace();
 			error.add(e.getMessage());

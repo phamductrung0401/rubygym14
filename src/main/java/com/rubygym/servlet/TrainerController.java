@@ -36,6 +36,7 @@ public class TrainerController extends HttpServlet  {
 	// admin tạo trainer mới , cập nhật account_trainer_id vào thông tin cá nhân của trainer
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			Session session = factory.openSession();
 			Transaction tx = session.beginTransaction();
 			
@@ -66,6 +67,7 @@ public class TrainerController extends HttpServlet  {
 		    out.flush();  					
 			
 		} catch (Exception e) {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			JSONObject bodyJsonResponse = new JSONObject();
 			bodyJsonResponse.put("error", e.getMessage());
 			JSONArray errors = new JSONArray();
@@ -84,6 +86,7 @@ public class TrainerController extends HttpServlet  {
 	// lấy thông tin cá nhân của tất cả trainer
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		try {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			Session session = factory.openSession();
 			Transaction tx = session.beginTransaction();
 			String[] criteria_array = HttpRequestUtil.getQuery(req);
@@ -126,6 +129,7 @@ public class TrainerController extends HttpServlet  {
 		    out.flush(); 
 		}
 		catch(Exception e) {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			JSONObject bodyJsonResponse = new JSONObject();
 			bodyJsonResponse.put("error", e.getMessage());
 			JSONArray errors = new JSONArray();
@@ -152,6 +156,7 @@ public class TrainerController extends HttpServlet  {
 	// sửa thông tin cá nhân của trainer theo id
 	protected void doPut(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			Session session = factory.openSession();
 			Transaction tx = session.beginTransaction();
 			
@@ -192,6 +197,7 @@ public class TrainerController extends HttpServlet  {
 		    out.flush();  					
 			
 		} catch (Exception e) {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			JSONObject bodyJsonResponse = new JSONObject();
 			bodyJsonResponse.put("error", e.getMessage());
 			JSONArray errors = new JSONArray();

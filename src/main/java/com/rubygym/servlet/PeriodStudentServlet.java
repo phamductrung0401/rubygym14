@@ -30,7 +30,7 @@ public class PeriodStudentServlet extends HttpServlet {
 		resp.setCharacterEncoding("UTF-8");
 		
 		try {
-			
+			resp.addHeader("Access-Control-Allow-Origin", "*");
 			String idString = HttpRequestUtil.parseURL(req, "period-student");
 			if (ScheduleUtil.checkStudentId(Integer.parseInt(idString))) {
 				Session session = HibernateUtil.getSessionFactory().openSession();
@@ -66,6 +66,7 @@ public class PeriodStudentServlet extends HttpServlet {
 			
 			
 		} catch (Exception e) {
+			resp.addHeader("Access-Control-Allow-Origin", "*");
 			// TODO: handle exception
 			e.printStackTrace();
 			

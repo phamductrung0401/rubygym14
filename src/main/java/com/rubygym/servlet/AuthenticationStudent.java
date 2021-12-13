@@ -31,6 +31,7 @@ public class AuthenticationStudent extends HttpServlet {
 	// check đăng nhập cho student và trả về thông tin cá nhân cho client, sở hữu tài khoản nầy (nếu tồn tại)
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			Session session = factory.openSession();
 			Transaction tx = session.beginTransaction();
 			
@@ -91,6 +92,7 @@ public class AuthenticationStudent extends HttpServlet {
 		 					
 			
 		} catch (Exception e) {
+			res.addHeader("Access-Control-Allow-Origin", "*");
 			JSONObject bodyJsonResponse = new JSONObject();
 			bodyJsonResponse.put("error", e.getMessage());
 			JSONArray errors = new JSONArray();
