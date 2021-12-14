@@ -49,8 +49,8 @@ public class Time {
 	public String toString() {
 		return "{" + "\"timeId\":" + id 
 				+ ",\"dayOfWeek\":" + dayOfWeek 
-				+ ",\"start\":" + start 
-				+ ",\"finish\":" + finish + "}";
+				+ ",\"start\":" + start == null ? null : start.toString()
+				+ ",\"finish\":" + finish == null ? null : finish.toString() + "}";
 	}
 	
 	public JSONObject toJsonObject() {

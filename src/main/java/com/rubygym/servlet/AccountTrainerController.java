@@ -31,6 +31,8 @@ public class AccountTrainerController extends HttpServlet  {
 	static SessionFactory factory = HibernateUtil.getSessionFactory();
 	// admin đăng ký tài khoản mới cho trainer (do admin thực hiện)
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		res.setCharacterEncoding("UTF-8");
 		try {
 			res.addHeader("Access-Control-Allow-Origin", "*");
 			Session session = factory.openSession();
@@ -109,6 +111,8 @@ public class AccountTrainerController extends HttpServlet  {
 	
 	// admin lấy thông tin tài khoản: username, password của tất cả trainer (trên tài khoản của admin)
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		req.setCharacterEncoding("UTF-8");
+		res.setCharacterEncoding("UTF-8");
 		try {
 			res.addHeader("Access-Control-Allow-Origin", "*");
 			Session session = factory.openSession();
@@ -163,6 +167,8 @@ public class AccountTrainerController extends HttpServlet  {
 	
 	// trainer sửa mật khẩu của mình (do trainer thực hiện chức năng đổi mật khẩu)
 	protected void doPut(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		res.setCharacterEncoding("UTF-8");
 		try {
 			res.addHeader("Access-Control-Allow-Origin", "*");
 			Session session = factory.openSession();

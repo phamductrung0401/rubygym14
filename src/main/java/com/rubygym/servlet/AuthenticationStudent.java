@@ -30,6 +30,8 @@ public class AuthenticationStudent extends HttpServlet {
 	
 	// check đăng nhập cho student và trả về thông tin cá nhân cho client, sở hữu tài khoản nầy (nếu tồn tại)
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		res.setCharacterEncoding("UTF-8");
 		try {
 			res.addHeader("Access-Control-Allow-Origin", "*");
 			Session session = factory.openSession();

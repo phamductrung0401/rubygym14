@@ -60,8 +60,8 @@ public class ScheduleTrainerServlet extends HttpServlet {
 						JSONObject tmp = new JSONObject();
 						tmp.put("timeId", s[0]);
 						tmp.put("dayOfWeek", s[1]);
-						tmp.put("start", s[2]);
-						tmp.put("finish", s[3]);
+						tmp.put("start", s[2] == null ? null : s[2].toString());
+						tmp.put("finish", s[3] == null ? null : s[3].toString());
 						tmp.put("studentNames", s[4]);
 						
 						data.add(tmp);

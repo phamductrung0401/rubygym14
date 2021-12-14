@@ -33,6 +33,8 @@ public class TrainerStudentController extends HttpServlet{
 	static SessionFactory factory = HibernateUtil.getSessionFactory();
 	// admin đăng ký tài khoản của student
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		res.setCharacterEncoding("UTF-8");
 		try {
 			res.addHeader("Access-Control-Allow-Origin", "*");
 			Session session = factory.openSession();
@@ -83,6 +85,8 @@ public class TrainerStudentController extends HttpServlet{
 		}
 	}
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		req.setCharacterEncoding("UTF-8");
+		res.setCharacterEncoding("UTF-8");
 		try {
 			res.addHeader("Access-Control-Allow-Origin", "*");
 			Session session = factory.openSession();
@@ -137,6 +141,8 @@ public class TrainerStudentController extends HttpServlet{
 		}
 	}
 	protected void doPut(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		res.setCharacterEncoding("UTF-8");
 		try {
 			res.addHeader("Access-Control-Allow-Origin", "*");
 			Session session = factory.openSession();
@@ -192,6 +198,8 @@ public class TrainerStudentController extends HttpServlet{
 		}
 	}
 	protected void doDelete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		res.setCharacterEncoding("UTF-8");
 		try {
 			res.addHeader("Access-Control-Allow-Origin", "*");
 			Session session = factory.openSession();

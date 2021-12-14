@@ -45,9 +45,9 @@ public class PeriodStudentServlet extends HttpServlet {
 					JSONObject tmp = new JSONObject();
 					tmp.put("periodId", s[0]);
 					tmp.put("dayOfWeek", s[1]);
-					tmp.put("start", s[2]);
-					tmp.put("finish", s[3]);
-					tmp.put("pDate", s[4]);
+					tmp.put("start", s[2] == null ? null : s[2].toString());
+					tmp.put("finish", s[3] == null ? null : s[3].toString());
+					tmp.put("pDate", s[4] == null ? null : s[4].toString());
 					tmp.put("content", s[5]);
 					tmp.put("note", s[6]);
 					data.add(tmp);

@@ -43,8 +43,8 @@ public class ScheduleStudentServlet extends HttpServlet {
 						JSONObject tmp = new JSONObject();
 						tmp.put("scheduleId", s[0]);
 						tmp.put("dayOfWeek", s[1]);
-						tmp.put("start", s[2]);
-						tmp.put("finish", s[3]);
+						tmp.put("start", s[2] == null ? null : s[2].toString());
+						tmp.put("finish", s[3] == null ? null : s[3].toString());
 						data.add(tmp);
 					}
 					error.add(null);

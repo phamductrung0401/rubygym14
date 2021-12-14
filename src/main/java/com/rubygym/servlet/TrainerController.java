@@ -35,6 +35,8 @@ public class TrainerController extends HttpServlet  {
 	
 	// admin tạo trainer mới , cập nhật account_trainer_id vào thông tin cá nhân của trainer
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		res.setCharacterEncoding("UTF-8");
 		try {
 			res.addHeader("Access-Control-Allow-Origin", "*");
 			Session session = factory.openSession();
@@ -85,6 +87,8 @@ public class TrainerController extends HttpServlet  {
 	
 	// lấy thông tin cá nhân của tất cả trainer
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+		req.setCharacterEncoding("UTF-8");
+		res.setCharacterEncoding("UTF-8");
 		try {
 			res.addHeader("Access-Control-Allow-Origin", "*");
 			Session session = factory.openSession();
@@ -113,7 +117,7 @@ public class TrainerController extends HttpServlet  {
 				jo.put("avatar", temp.getAvatar());
 				jo.put("name", temp.getName());
 				jo.put("sex", temp.getSex());
-				jo.put("date_of_birth", temp.getDateOfBirth());
+				jo.put("date_of_birth", temp.getDateOfBirth() == null ? null : temp.getDateOfBirth().toString());
 				jo.put("phone_number", temp.getPhoneNumber());
 				jo.put("description", temp.getDescription());
 				jo.put("account_trainer_id", temp.getAccountId());
@@ -155,6 +159,8 @@ public class TrainerController extends HttpServlet  {
 	
 	// sửa thông tin cá nhân của trainer theo id
 	protected void doPut(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		res.setCharacterEncoding("UTF-8");
 		try {
 			res.addHeader("Access-Control-Allow-Origin", "*");
 			Session session = factory.openSession();
