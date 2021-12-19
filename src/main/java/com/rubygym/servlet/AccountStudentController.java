@@ -141,7 +141,7 @@ public class AccountStudentController extends HttpServlet  {
 				jo.put("username", temp.getUsername());
 				jo.put("password", temp.getPassword());
 				jo.put("accumulation", temp.getAccumulation());
-				jo.put("expire", temp.getExpireDate());
+				jo.put("expire", temp.getExpireDate() == null ? null : temp.getExpireDate().toString());
 				jo.put("service_id", temp.getServiceId());
 				((ArrayList) data).add(jo);
 			}

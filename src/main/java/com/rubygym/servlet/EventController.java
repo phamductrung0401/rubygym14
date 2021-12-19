@@ -113,7 +113,7 @@ public class EventController extends HttpServlet{
 				jo.put("title", temp.getTitle());
 				jo.put("description", temp.getDescription());
 				jo.put("category", temp.getCategory());
-				jo.put("expire", temp.getExpire());
+				jo.put("expire", temp.getExpire() == null ? null : temp.getExpire().toString());
 				((ArrayList) data).add(jo);
 			}
 			bodyJsonResponse.put("data", data);
