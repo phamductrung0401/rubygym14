@@ -127,7 +127,7 @@ public class StudentController extends HttpServlet  {
 				jo.put("date_of_birth", temp.getDateOfBirth() == null ? null : temp.getDateOfBirth().toString());
 				jo.put("phone_number", temp.getPhoneNumber());
 				jo.put("description", temp.getDescription());
-				jo.put("account_trainer_id", temp.getAccountId());
+				jo.put("account_student_id", temp.getAccountId());
 				jo.put("height", temp.getHeight());
 				jo.put("weight", temp.getWeight());
 				jo.put("bmi", temp.getBmi());
