@@ -7,16 +7,12 @@
     <session-factory>
 		<!-- JDBC Database connection settings  -->
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-<<<<<<< HEAD
         <property name="hibernate.connection.password">1234</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/rubygym</property>
         <property name="hibernate.connection.username">root</property>
-=======
-       <property name="hibernate.connection.password">asd123asd123</property>
-        <property name="hibernate.connection.url">jdbc:mysql://103.97.125.254/jwrdogbp_rubygym</property>
-        <property name="hibernate.connection.username">jwrdogbp_admin</property>
->>>>>>> 02ba0f2 (event api)
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        
+        <property name="connection.pool_size">100</property>
         
    <!--      JDBC connection pool settings ... using built-in test pool
         <property name="connection.pool_size">1</property>
