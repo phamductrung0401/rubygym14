@@ -45,6 +45,7 @@ public class ScheduleStudentServlet extends HttpServlet {
 						tmp.put("dayOfWeek", s[1]);
 						tmp.put("start", s[2] == null ? null : s[2].toString());
 						tmp.put("finish", s[3] == null ? null : s[3].toString());
+						tmp.put("trainerId", s[4]);
 						data.add(tmp);
 					}
 					error.add(null);

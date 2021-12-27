@@ -293,7 +293,7 @@ public class ScheduleUtil {
 		Session session = factory.openSession();
 		session.beginTransaction();
 		
-		List<Object[]> list = session.createQuery("select s.id, t.dayOfWeek, t.start, t.finish" 
+		List<Object[]> list = session.createQuery("select s.id, t.dayOfWeek, t.start, t.finish, ts.trainerId" 
 				+ " from Schedule s, TrainerStudent ts, Time t where"
 				+ " s.trainerStudentId = ts.id and s.timeId = t.id and "
 				+ " ts.studentId = " + studentId).getResultList();
