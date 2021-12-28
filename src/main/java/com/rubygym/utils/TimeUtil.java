@@ -9,6 +9,12 @@ import com.rubygym.model.Time;;
 
 public class TimeUtil {
 	
+	public static void main(String[] args) throws Exception {
+		Time t = TimeUtil.getTime(30);
+//		System.out.println(t.getId() + ' ' + t.getDayOfWeek() );//+ ' ' + t.getStart().toString() + ' ' + t.getFinish().toString());
+		System.out.println(t.toString());
+	}
+	
 	private static SessionFactory factory = HibernateUtil.getSessionFactory();
 	
 	public static Time getTime(int timeId) throws Exception {

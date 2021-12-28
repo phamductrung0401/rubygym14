@@ -45,13 +45,16 @@ public class Time {
 		return finish;
 	}
 
-	@Override
-	public String toString() {
-		return "{" + "\"timeId\":" + id 
-				+ ",\"dayOfWeek\":" + dayOfWeek 
-				+ ",\"start\":" + start == null ? null : start.toString()
-				+ ",\"finish\":" + finish == null ? null : finish.toString() + "}";
-	}
+//	@Override
+//	public String toString() {
+//		return "{" + "\"timeId\":" + id 
+//				+ ",\"dayOfWeek\":" + dayOfWeek 
+//				+ ",\"start\": \"" + start == null ? null : start + "\""
+//				+ ",\"finish\": \"" + finish == null ? null : finish + "\""
+//				+ "}";
+//	}
+	
+	
 	
 	public JSONObject toJsonObject() {
 		
@@ -61,6 +64,11 @@ public class Time {
 		jsonObject.put("start", start);
 		jsonObject.put("finish", finish);
 		return null;
+	}
+
+	@Override
+	public String toString() {
+		return "{\n\"timeId\":" + id + ",\n \"dayOfWeek\":" + dayOfWeek + ",\n \"start\":\"" + start + "\",\n \"finish\":\"" + finish + "\"}";
 	}
 	
 }
