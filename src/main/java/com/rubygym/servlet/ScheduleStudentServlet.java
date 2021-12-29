@@ -20,6 +20,7 @@ import com.rubygym.utils.HttpRequestUtil;
 import com.rubygym.utils.HttpResponseUtil;
 import com.rubygym.utils.ScheduleUtil;
 import com.rubygym.utils.TimeUtil;
+import com.rubygym.utils.TrainerStudentUtil;
 
 @WebServlet(urlPatterns = "/schedule-student/*")
 public class ScheduleStudentServlet extends HttpServlet {
@@ -39,14 +40,23 @@ public class ScheduleStudentServlet extends HttpServlet {
 				String idString = HttpRequestUtil.parseURL(req, "schedule-student");
 				if (ScheduleUtil.checkStudentId(Integer.parseInt(idString))) {
 					list = ScheduleUtil.getStudentSchedule(Integer.parseInt(idString));
-					for (Object[] s : list) {
+					// thêm trường trainerId khi student chưa có lịch
+					if (list.size() < 1) {
 						JSONObject tmp = new JSONObject();
-						tmp.put("scheduleId", s[0]);
-						tmp.put("dayOfWeek", s[1]);
-						tmp.put("start", s[2] == null ? null : s[2].toString());
-						tmp.put("finish", s[3] == null ? null : s[3].toString());
-						tmp.put("trainerId", s[4]);
+						tmp.put("trainerId", TrainerStudentUtil.getTrainerId(Integer.parseInt(idString)));
+						tmp.put("message", "Bạn chưa đăng ký lịch tập với HLV!");
 						data.add(tmp);
+					}
+					else {
+						for (Object[] s : list) {
+							JSONObject tmp = new JSONObject();
+							tmp.put("scheduleId", s[0]);
+							tmp.put("dayOfWeek", s[1]);
+							tmp.put("start", s[2] == null ? null : s[2].toString());
+							tmp.put("finish", s[3] == null ? null : s[3].toString());
+							tmp.put("trainerId", s[4]);
+							data.add(tmp);
+						}
 					}
 					error.add(null);
 					HttpResponseUtil.setResponse(resp, data, error);

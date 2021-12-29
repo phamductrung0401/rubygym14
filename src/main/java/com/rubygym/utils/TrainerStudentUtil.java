@@ -7,6 +7,17 @@ public class TrainerStudentUtil {
 	
 	private static SessionFactory factory = HibernateUtil.getSessionFactory();
 	
+	public static Integer getTrainerId(int studentId) throws Exception {
+		Session session = factory.openSession();
+		session.beginTransaction();
+		
+		Integer trainerId = (Integer) session.createQuery("select ts.trainerId"
+				+ " from TrainerStudent ts where ts.studentId = " + studentId).uniqueResult();
+		
+		session.getTransaction().commit();
+		return trainerId;
+	}
+	
 	public static Integer getTrainerStudentId(int studentId) throws Exception {
 		Session session = factory.openSession();
 		session.beginTransaction();

@@ -5,20 +5,20 @@ use rubygym;
 CREATE TABLE `trainer` (
   `id` int NOT NULL auto_increment,
   `avatar` varchar(4000) default null,
-  `name` varchar(255) not null,
+  `name` varchar(255) default null,
   `sex` varchar(10) default null,
   `date_of_birth` date default null,
   `phone_number` varchar(20) default null,
   `email` varchar(100) default null,
   `description` varchar(4000)  default null,
-  `account_trainer_id` int not null,
+  `account_trainer_id` int default null,
   primary key (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `student` (
   `id` int NOT NULL auto_increment,
   `avatar` varchar(4000) default null,
-  `name` varchar(255) not null,
+  `name` varchar(255) default null,
   `sex` varchar(10) default null,
   `date_of_birth` date default null,
   `phone_number` varchar(20) default null,
@@ -29,7 +29,7 @@ CREATE TABLE `student` (
   `bmi` float default null,
   `others` varchar(4000) default null,
   `target` varchar(4000) default null,
-  `account_student_id` int not null,
+  `account_student_id` int default null,
   primary key (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
