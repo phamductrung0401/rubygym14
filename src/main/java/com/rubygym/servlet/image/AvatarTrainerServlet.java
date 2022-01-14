@@ -135,7 +135,7 @@ public class AvatarTrainerServlet extends HttpServlet{
 		        .build();
 		Storage storage = storageOptions.getService();
 		BlobId blobId = BlobId.of(bucketName, fileName);
-		BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
+		BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("image/jpeg").build();
 		Blob blob = storage.create(blobInfo, bytes);
 //		return blob.getMediaLink();
 		

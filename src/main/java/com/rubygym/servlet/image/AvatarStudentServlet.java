@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -135,8 +137,11 @@ public class AvatarStudentServlet extends HttpServlet{
 		        .build();
 		Storage storage = storageOptions.getService();
 		BlobId blobId = BlobId.of(bucketName, fileName);
-		BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
+		BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("image/jpeg").build();
 		Blob blob = storage.create(blobInfo, bytes);
+		
+		System.out.println(blob.getContentType());
+		
 		String uploadName = blob.getSelfLink().substring(
 				"https://www.googleapis.com/storage/v1/b/test-upload-file-gcloud.appspot.com/o/".length());
 		String publicUrl = "https://storage.googleapis.com/" + bucketName + "/" + uploadName;
