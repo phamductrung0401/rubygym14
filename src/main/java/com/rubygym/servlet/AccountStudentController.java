@@ -207,7 +207,7 @@ public class AccountStudentController extends HttpServlet  {
 			//tim kiem trong bang service record tuong ung voi service_id
 			CriteriaQuery<Service> cr1 = cb.createQuery(Service.class);
 			Root<Service> root1  = cr1.from(Service.class);			
-			cr.where(root.get("id").in(((Long) t.get("service_id")).intValue()));
+			cr1.where(root.get("id").in(((Long) t.get("service_id")).intValue()));
 			List<Service> result1 = session.createQuery(cr1).getResultList();
 			if(result1.size()==0) {
 				throw new Exception("Không tồn tại gói tập");
