@@ -102,7 +102,7 @@ public class ReviewAdminServlet extends HttpServlet{
 				else {
 					// sửa
 					session.createQuery("update ReviewAdmin ra "
-							+ "set ra.review = ?0, ra.rate = ?1 , ra.date = ?2 "
+							+ "set ra.reviewFromStudent = ?0, ra.rate = ?1 , ra.date = ?2 "
 							+ "where ra.id = ?3")
 					.setParameter(0, fromStudent.getReview())
 					.setParameter(1, fromStudent.getRate())
@@ -153,7 +153,7 @@ public class ReviewAdminServlet extends HttpServlet{
 		try {
 			
 			JSONObject dataClient = (JSONObject) HttpRequestUtil.getBody(req);
-			Integer studentId = (Integer) dataClient.get("studentId");
+			Integer studentId = Integer.parseInt(dataClient.get("studentId").toString());
 			
 			Session session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();

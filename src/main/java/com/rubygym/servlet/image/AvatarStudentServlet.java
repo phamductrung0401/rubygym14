@@ -33,39 +33,39 @@ import com.rubygym.utils.HttpResponseUtil;
 @MultipartConfig
 @WebServlet("/avatar-student/*")
 public class AvatarStudentServlet extends HttpServlet{
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		JSONArray data = new JSONArray();
-		JSONArray error = new JSONArray();
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		String idString = HttpRequestUtil.parseURL(request, "avatar-student");
-		
-		try {
-			response.addHeader("Access-Control-Allow-Origin", "*");
-			
-			Session session = HibernateUtil.getSessionFactory().openSession();
-			session.beginTransaction();
-			
-			String avatarUrl = (String) session.createQuery("select s.avatar from Student s where s.id = " + Integer.parseInt(idString))
-					.uniqueResult();
-			
-			JSONObject tmp = new JSONObject();
-			tmp.put("avatarUrl", avatarUrl);
-			data.add(tmp);
-			error.add(null);
-			HttpResponseUtil.setResponse(response, data, error);
-			
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			// TODO: handle exception
-			response.addHeader("Access-Control-Allow-Origin", "*");
-			data.add(null);
-			error.add(e.getMessage());
-			HttpResponseUtil.setResponse(response, data, error);
-		}
-	}
+//	@Override
+//	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		JSONArray data = new JSONArray();
+//		JSONArray error = new JSONArray();
+//		request.setCharacterEncoding("UTF-8");
+//		response.setCharacterEncoding("UTF-8");
+//		String idString = HttpRequestUtil.parseURL(request, "avatar-student");
+//		
+//		try {
+//			response.addHeader("Access-Control-Allow-Origin", "*");
+//			
+//			Session session = HibernateUtil.getSessionFactory().openSession();
+//			session.beginTransaction();
+//			
+//			String avatarUrl = (String) session.createQuery("select s.avatar from Student s where s.id = " + Integer.parseInt(idString))
+//					.uniqueResult();
+//			
+//			JSONObject tmp = new JSONObject();
+//			tmp.put("avatarUrl", avatarUrl);
+//			data.add(tmp);
+//			error.add(null);
+//			HttpResponseUtil.setResponse(response, data, error);
+//			
+//		}
+//		catch (Exception e) {
+//			e.printStackTrace();
+//			// TODO: handle exception
+//			response.addHeader("Access-Control-Allow-Origin", "*");
+//			data.add(null);
+//			error.add(e.getMessage());
+//			HttpResponseUtil.setResponse(response, data, error);
+//		}
+//	}
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -94,7 +94,9 @@ public class AvatarStudentServlet extends HttpServlet{
 				
 				session.createQuery("update Student s set s.avatar = '" + uploadedFileUrl +
 						"' where s.id = " + Integer.parseInt(idString)).executeUpdate();
-				data.add("Đã cập nhật ảnh đại diện mới. ");
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("avatarUrl", uploadedFileUrl);
+				data.add(jsonObject);
 				error.add(null);
 				HttpResponseUtil.setResponse(response, data, error);
 				
@@ -135,7 +137,11 @@ public class AvatarStudentServlet extends HttpServlet{
 		BlobId blobId = BlobId.of(bucketName, fileName);
 		BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
 		Blob blob = storage.create(blobInfo, bytes);
-		return blob.getMediaLink();
+		String uploadName = blob.getSelfLink().substring(
+				"https://www.googleapis.com/storage/v1/b/test-upload-file-gcloud.appspot.com/o/".length());
+		String publicUrl = "https://storage.googleapis.com/" + bucketName + "/" + uploadName;
+		return publicUrl;
+		
 		
 	}
 	
