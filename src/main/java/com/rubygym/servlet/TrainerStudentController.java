@@ -118,7 +118,7 @@ public class TrainerStudentController extends HttpServlet{
 				List<Student> result2 = session.createQuery(cr2).getResultList();
 				//
 				jo.put("name", (result2.get(0)).getName());
-				jo.put("date_of_birth", (result2.get(0)).getDateOfBirth());
+				jo.put("date_of_birth", (result2.get(0)).getDateOfBirth() == null ? null : (result2.get(0)).getDateOfBirth().toString());
 				jo.put("sex", (result2.get(0)).getSex());
 				jo.put("description", (result2.get(0)).getDescription());
 				jo.put("weight", (result2.get(0)).getWeight());
