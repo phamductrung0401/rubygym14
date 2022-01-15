@@ -298,3 +298,21 @@ truncate requirement;
 INSERT INTO `rubygym`.`requirement` (`trainer_student_id`, `schedule_id`, `category`) VALUES ('1', '1', '-1');
 INSERT INTO `rubygym`.`requirement` (`trainer_student_id`, `schedule_id`, `time_id_new`, `category`) VALUES ('1', '2', '30', '0');
 INSERT INTO `rubygym`.`requirement` (`trainer_student_id`, `time_id_new`, `category`) VALUES ('1', '40', '1');
+
+create table `review_student` (
+    `student_id` int NOT NULL,
+    `review` varchar(1000) default null,
+    `rate` int default null,
+    `date` date default null,
+    `state` int default 0, -- 0: chờ xử lý, -1: từ chối , 1: phê duyệt
+    primary key(student_id)
+) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+-- hiển thị ra public để quảng bá
+create table `review_admin` (
+    `student_id` int NOT NULL,
+    `review` varchar(1000) default null,
+    `rate` int default null,
+    `date` date default null,
+    primary key(student_id)
+) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
