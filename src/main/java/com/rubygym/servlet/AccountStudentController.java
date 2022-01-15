@@ -28,7 +28,7 @@ import com.rubygym.utils.*;
 public class AccountStudentController extends HttpServlet  {
 	private static final long serialVersionUID = 1L;
 	static SessionFactory factory = HibernateUtil.getSessionFactory();
-	// admin đăng ký tài khoản của student
+	// admin Ä‘Äƒng kÃ½ tÃ i khoáº£n cá»§a student
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		res.setCharacterEncoding("UTF-8");
@@ -37,13 +37,13 @@ public class AccountStudentController extends HttpServlet  {
 			Session session = factory.openSession();
 			Transaction tx = session.beginTransaction();
 			
-			//đọc body của http request
+			//Ä‘á»�c body cá»§a http request
 			JSONObject t =  (JSONObject) HttpRequestUtil.getBody(req);
 			System.out.print(t.toJSONString());
 			AccountStudent newAccountStudent = new AccountStudent();
 			if (t.get("username") != null) newAccountStudent.setUsername((String) t.get("username"));
 			else {
-				throw new Exception("Không được để trống tên tài khoản");
+				throw new Exception("KhÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng tÃªn tÃ i khoáº£n");
 			}
 			if (t.get("password") != null) { newAccountStudent.setPassword((String) t.get("password"));
 			newAccountStudent.setAccumulation(0);
@@ -51,9 +51,9 @@ public class AccountStudentController extends HttpServlet  {
 			}
 			
 			else {
-				throw new Exception("Không được để trống mật khẩu");
+				throw new Exception("KhÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng máº­t kháº©u");
 			}
-			//Kiểm tra xem đã tồn tại tại khoản trên chưa
+			//Kiá»ƒm tra xem Ä‘Ã£ tá»“n táº¡i táº¡i khoáº£n trÃªn chÆ°a
 			CriteriaBuilder cb = session.getCriteriaBuilder();
 			CriteriaQuery<AccountStudent> cr = cb.createQuery(AccountStudent.class);
 			Root<AccountStudent> root  = cr.from(AccountStudent.class);
@@ -61,20 +61,20 @@ public class AccountStudentController extends HttpServlet  {
 			List<AccountStudent> result = session.createQuery(cr).getResultList();
 			System.out.print(result.toString());
 			if(result.size() > 0) {
-				throw new Exception("Tài khoản này đã tồn tại");
+				throw new Exception("TÃ i khoáº£n nÃ y Ä‘Ã£ tá»“n táº¡i");
 			}
 			
 			session.save(newAccountStudent);
 			tx.commit();
 			
-			//Lấy thông tin tài khoản vừa tạo
+			//Láº¥y thÃ´ng tin tÃ i khoáº£n vá»«a táº¡o
 			cb = session.getCriteriaBuilder();
 			CriteriaQuery<AccountStudent> cr1 = cb.createQuery(AccountStudent.class);
 			Root<AccountStudent> root1  = cr1.from(AccountStudent.class);
 			cr1.where(root1.get("username").in(t.get("username")));		
 			List<AccountStudent> result1 = session.createQuery(cr1).getResultList();
 			
-			//Gửi thông tin tài khoản vừa tạo về cho client
+			//Gá»­i thÃ´ng tin tÃ i khoáº£n vá»«a táº¡o vá»� cho client
 			JSONObject bodyJsonResponse = new JSONObject();
 			JSONArray data = new JSONArray();
 			for(AccountStudent temp:result1) {
@@ -112,7 +112,7 @@ public class AccountStudentController extends HttpServlet  {
 		}
 	}
 	
-	// admin lấy tất cả thông tin về tài khoản của student
+	// admin láº¥y táº¥t cáº£ thÃ´ng tin vá»� tÃ i khoáº£n cá»§a student
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		req.setCharacterEncoding("UTF-8");
 		res.setCharacterEncoding("UTF-8");
@@ -173,9 +173,9 @@ public class AccountStudentController extends HttpServlet  {
 	
 	
 	
-	// student sửa mật khẩu
-	// thêm chức năng gia hạn gói tập tại đây 
-	// phân biệt bằng body request ......
+	// student sá»­a máº­t kháº©u
+	// thÃªm chá»©c nÄƒng gia háº¡n gÃ³i táº­p táº¡i Ä‘Ã¢y 
+	// phÃ¢n biá»‡t báº±ng body request ......
 	
 	protected void doPut(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
@@ -185,7 +185,7 @@ public class AccountStudentController extends HttpServlet  {
 			Session session = factory.openSession();
 			Transaction tx = session.beginTransaction();
 			
-			//đọc body của http request
+			//Ä‘á»�c body cá»§a http request
 			JSONObject t =  (JSONObject) HttpRequestUtil.getBody(req);
 			AccountStudent newAccountStudent = new AccountStudent();
 		
@@ -210,12 +210,21 @@ public class AccountStudentController extends HttpServlet  {
 			cr1.where(root.get("id").in(((Long) t.get("service_id")).intValue()));
 			List<Service> result1 = session.createQuery(cr1).getResultList();
 			if(result1.size()==0) {
-				throw new Exception("Không tồn tại gói tập");
+				throw new Exception("KhÃ´ng tá»“n táº¡i gÃ³i táº­p");
 			}
 			else {	
-				newAccountStudent.setExpireDate( newAccountStudent.getExpireDate().plusMonths(result1.get(0).getnMonths()));
-			
-				newAccountStudent.setAccumulation( newAccountStudent.getAccumulation() + result1.get(0).getnMonths());
+				if(newAccountStudent.getAccumulation() >= 12 && result1.get(0).getnMonths()>=12) {
+					newAccountStudent.setExpireDate( newAccountStudent.getExpireDate().plusMonths(result1.get(0).getnMonths() + 3 ));			
+					newAccountStudent.setAccumulation( newAccountStudent.getAccumulation() + result1.get(0).getnMonths() + 3);
+					System.out.println("Ban la thanh vien thien thiet");
+				}
+				else {
+					newAccountStudent.setExpireDate( newAccountStudent.getExpireDate().plusMonths(result1.get(0).getnMonths()));			
+					newAccountStudent.setAccumulation( newAccountStudent.getAccumulation() + result1.get(0).getnMonths());
+					System.out.println("Ban khong la thanh vien thien thiet");
+				}
+				
+				
 			
 			}
 			}
@@ -225,7 +234,7 @@ public class AccountStudentController extends HttpServlet  {
 			
 			
 			
-			//gửi http response về cho client
+			//gá»­i http response vá»� cho client
 			JSONObject bodyJsonResponse = new JSONObject();
 			bodyJsonResponse.put("error", "null");
 			bodyJsonResponse.put("data", "null");

@@ -21,7 +21,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
+import com.rubygym.model.Student;
 import com.rubygym.model.Trainer;
 import com.rubygym.model.TrainerStudent;
 import com.rubygym.utils.HibernateUtil;
@@ -31,7 +31,7 @@ import com.rubygym.utils.HttpRequestUtil;
 public class TrainerStudentController extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	static SessionFactory factory = HibernateUtil.getSessionFactory();
-	// admin đăng ký tài khoản của student
+	// admin Ä‘Äƒng kÃ½ tÃ i khoáº£n cá»§a student
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		res.setCharacterEncoding("UTF-8");
@@ -40,23 +40,23 @@ public class TrainerStudentController extends HttpServlet{
 			Session session = factory.openSession();
 			Transaction tx = session.beginTransaction();
 			
-			//đọc body của http request
+			//Ä‘á»�c body cá»§a http request
 			JSONObject t =  (JSONObject) HttpRequestUtil.getBody(req);
 			TrainerStudent newTrainerStudent = new TrainerStudent();
 			if (t.get("trainer_id") != null) newTrainerStudent.setTrainerId(((Long) t.get("trainer_id")).intValue());
 			else {
-				throw new Exception("Không được để trống trainer_id");
+				throw new Exception("KhÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng trainer_id");
 			}
 			if (t.get("student_id") != null) newTrainerStudent.setStudentId(((Long) t.get("student_id")).intValue());
 			else {
-				throw new Exception("Không được để trống student_id");
+				throw new Exception("KhÃ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng student_id");
 			}
 			
 			session.save(newTrainerStudent);
 			tx.commit();
 			
 			
-			//gửi http response về cho client
+			//gá»­i http response vá»� cho client
 			JSONObject bodyJsonResponse = new JSONObject();
 			bodyJsonResponse.put("error", "null");
 			bodyJsonResponse.put("data", "null");
@@ -108,6 +108,23 @@ public class TrainerStudentController extends HttpServlet{
 			JSONArray data = new JSONArray();
 			for(TrainerStudent temp:result) {
 				JSONObject jo = new JSONObject();
+				//more detail
+				cb = session.getCriteriaBuilder();
+				CriteriaQuery<Student> cr2 = cb.createQuery(Student.class);
+				Root<Student> root2  = cr2.from(Student.class);
+				cr2.where(root2.get("id").in(temp.getStudentId()));
+				List<Student> result2 = session.createQuery(cr2).getResultList();
+				//
+				jo.put("name", (result2.get(0)).getName());
+				jo.put("date_of_birth", (result2.get(0)).getDateOfBirth());
+				jo.put("sex", (result2.get(0)).getSex());
+				jo.put("description", (result2.get(0)).getDescription());
+				jo.put("weight", (result2.get(0)).getWeight());
+				jo.put("target", (result2.get(0)).getTarget());
+				jo.put("phone_number", (result2.get(0)).getPhoneNumber());
+				jo.put("height", (result2.get(0)).getHeight());
+				jo.put("bmi", (result2.get(0)).getBmi());
+				
 				jo.put("id", temp.getId());
 				jo.put("trainer_id", temp.getTrainerId());
 				jo.put("student_id", temp.getStudentId());
@@ -148,7 +165,7 @@ public class TrainerStudentController extends HttpServlet{
 			Session session = factory.openSession();
 			Transaction tx = session.beginTransaction();
 			
-			//đọc body của http request
+			//Ä‘á»�c body cá»§a http request
 			JSONObject t =  (JSONObject) HttpRequestUtil.getBody(req);
 			TrainerStudent newTrainerStudent = new TrainerStudent();
 		
@@ -170,7 +187,7 @@ public class TrainerStudentController extends HttpServlet{
 			tx.commit();
 			
 			
-			//gửi http response về cho client
+			//gá»­i http response vá»� cho client
 			JSONObject bodyJsonResponse = new JSONObject();
 			bodyJsonResponse.put("error", "null");
 			bodyJsonResponse.put("data", "null");
@@ -205,7 +222,7 @@ public class TrainerStudentController extends HttpServlet{
 			Session session = factory.openSession();
 			Transaction tx = session.beginTransaction();
 			
-			//đọc body của http request
+			//Ä‘á»�c body cá»§a http request
 			JSONObject t =  (JSONObject) HttpRequestUtil.getBody(req);
 			TrainerStudent newTrainerStudent = new TrainerStudent();
 			newTrainerStudent.setId(((Long) t.get("id")).intValue());
@@ -215,7 +232,7 @@ public class TrainerStudentController extends HttpServlet{
 			tx.commit();
 			
 			
-			//gửi http response về cho client
+			//gá»­i http response vá»� cho client
 			JSONObject bodyJsonResponse = new JSONObject();
 			bodyJsonResponse.put("error", "null");
 			bodyJsonResponse.put("data", "null");
