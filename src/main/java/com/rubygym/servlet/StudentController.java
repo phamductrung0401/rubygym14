@@ -145,6 +145,7 @@ public class StudentController extends HttpServlet  {
 		    res.setCharacterEncoding("UTF-8");
 		    out.print(bodyStringResponse);
 		    out.flush(); 
+		    session.close();
 		}
 		catch(Exception e) {
 			 res.addHeader("Access-Control-Allow-Origin", "*");

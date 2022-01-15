@@ -17,7 +17,7 @@
 >>>>>>> 2b4e2bc6c4f519f0931f0908c4ca685afdf0689b -->
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         
-        <property name="connection.pool_size">100</property>
+        <property name="connection.pool_size">10</property>
         
    <!--      JDBC connection pool settings ... using built-in test pool
         <property name="connection.pool_size">1</property>
