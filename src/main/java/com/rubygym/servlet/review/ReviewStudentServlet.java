@@ -50,6 +50,7 @@ public class ReviewStudentServlet extends HttpServlet {
 					+ Integer.parseInt(idString)).uniqueResult();
 			
 			session.getTransaction().commit();
+			session.close();
 			
 			Student s = TrainerStudentUtil.getStudent(Integer.parseInt(idString));
 			JSONObject jsonObject = new JSONObject();
@@ -110,6 +111,7 @@ public class ReviewStudentServlet extends HttpServlet {
 				
 				session.save(reviewStudent);
 				
+				
 				data.add("Đánh giá / Phản hồi thành công. Đợi người quản lý xử lý !");
 				error.add(null);
 				HttpResponseUtil.setResponse(resp, data, error);
@@ -122,6 +124,7 @@ public class ReviewStudentServlet extends HttpServlet {
 			}
 			
 			session.getTransaction().commit();
+			session.close();
 			
 			
 		} catch (Exception e) {
@@ -154,6 +157,7 @@ public class ReviewStudentServlet extends HttpServlet {
 					+ Integer.parseInt(idString) ).executeUpdate();
 			
 			session.getTransaction().commit();
+			session.close();
 			
 			data.add("Xoá đánh giá / phản hồi thành công");
 			error.add(null);
@@ -202,6 +206,7 @@ public class ReviewStudentServlet extends HttpServlet {
 			.executeUpdate();
 			
 			session.getTransaction().commit();
+			session.close();
 			
 			data.add("Chỉnh sửa đánh giá / phản hồi thành công");
 			error.add(null);

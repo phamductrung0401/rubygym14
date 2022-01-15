@@ -57,6 +57,8 @@ public class PeriodStudentServlet extends HttpServlet {
 				
 				session.getTransaction().commit();
 				
+				session.close();
+				
 			}
 			else {
 				data.add(null);

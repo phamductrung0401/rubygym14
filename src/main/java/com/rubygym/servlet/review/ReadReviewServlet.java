@@ -55,7 +55,7 @@ public class ReadReviewServlet extends HttpServlet{
 				}
 				
 			}
-			
+			session.close();
 			error.add(null);
 			resp.addHeader("Access-Control-Allow-Origin", "*");
 			HttpResponseUtil.setResponse(resp, data, error);

@@ -25,6 +25,7 @@ public class TimeUtil {
 		Time time = (Time) session.createQuery("from Time t where t.id = " +  timeId).uniqueResult();
 		
 		session.getTransaction().commit();
+		session.close();
 
 		return time;
 		
@@ -42,6 +43,7 @@ public class TimeUtil {
 				.uniqueResult();
 		
 		session.getTransaction().commit();
+		session.close();
 		
 		return time;
 	}

@@ -103,6 +103,7 @@ public class AvatarStudentServlet extends HttpServlet{
 				HttpResponseUtil.setResponse(response, data, error);
 				
 				session.getTransaction().commit();
+				session.close();
 			}
 			
 			else {

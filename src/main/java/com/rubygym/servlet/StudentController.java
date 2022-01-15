@@ -73,7 +73,9 @@ public class StudentController extends HttpServlet  {
 		    res.setContentType("application/json");
 		    res.setCharacterEncoding("UTF-8");
 		    out.print(bodyStringResponse);
-		    out.flush();  					
+		    out.flush();  	
+		    
+		    session.close();
 			
 		} catch (Exception e) {
 			res.addHeader("Access-Control-Allow-Origin", "*");
@@ -208,6 +210,8 @@ public class StudentController extends HttpServlet  {
 			if (t.get("account_student_id") != null)newStudent.setAccountId(((Long) t.get("account_student_id")).intValue());
 			session.update(newStudent);
 			tx.commit();
+			
+			session.close();
 			
 			
 			//gửi http response về cho client

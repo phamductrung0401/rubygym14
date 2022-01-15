@@ -30,6 +30,7 @@ public class ScheduleUtil {
 		session.createQuery("delete from TrainerStudent ts where ts.id = " + trainerStudentId);
 		
 		session.getTransaction().commit();
+		session.close();
 		
 	}
 	
@@ -45,6 +46,7 @@ public class ScheduleUtil {
 				, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		
 		session.getTransaction().commit();
+		session.close();
 		
 		if (expireDate.isBefore(checkDate)) return true; // đã hết hạn so với ngày check
 		return false;
@@ -79,6 +81,7 @@ public class ScheduleUtil {
 //				+ " where r.trainerStudentId = ts.id and ts.studentId = " + studentId
 //				+ " and r.category <> -1").getResultList();
 		session.getTransaction().commit();
+		session.close();
 //		
 //		list.addAll(list1);
 		list.add(timeId);
@@ -121,6 +124,7 @@ public class ScheduleUtil {
 				.setParameter(1, trainerId)
 				.getResultList();
 		session.getTransaction().commit();
+		session.close();
 		
 		if (periodPerDay == null) return false;
 		Integer countPeriodPerDay = periodPerDay.size();
@@ -141,6 +145,7 @@ public class ScheduleUtil {
 				.setParameter(1, trainerId)
 				.uniqueResult();
 		session.getTransaction().commit();
+		session.close();
 		if (countStudentPerPeriod == null) return false;
 		
 		if (Integer.parseInt(countStudentPerPeriod.toString()) + 1 > 3) return true; // bị vượt quá số student có thể handle trong 1 period
@@ -163,6 +168,7 @@ public class ScheduleUtil {
 				.uniqueResult();
 		
 		session.getTransaction().commit();
+		session.close();
 		
 		if (maxPeriod == null || countAddRequirementPeriod == null || countSchedulePeriod == null) return false;
 		
@@ -214,6 +220,7 @@ public class ScheduleUtil {
 		}
 		
 		session.getTransaction().commit();
+		session.close();
 		
 		if (isExistR != null) return false;
 		return true;
@@ -228,6 +235,7 @@ public class ScheduleUtil {
 		Schedule schedule = (Schedule) session.createQuery("from Schedule s where s.id = " + scheduleId).uniqueResult();
 		
 		session.getTransaction().commit();
+		session.close();
 		
 		return schedule;
 	}
@@ -241,6 +249,7 @@ public class ScheduleUtil {
 				+ " ts.trainerId = " + trainerId).getResultList();
 		
 		session.getTransaction().commit();
+		session.close();
 		if (list.size() > 0)
 			return true;
 		return false;
@@ -255,6 +264,7 @@ public class ScheduleUtil {
 				+ " ts.studentId = " + studentId).getResultList();
 		
 		session.getTransaction().commit();
+		session.close();
 		if (list.size() > 0)
 			return true;
 		return false;
@@ -285,6 +295,7 @@ public class ScheduleUtil {
 		
 		
 		session.getTransaction().commit();
+		session.close();
 		
 		return list;
 	}
@@ -299,6 +310,7 @@ public class ScheduleUtil {
 				+ " ts.studentId = " + studentId).getResultList();
 		
 		session.getTransaction().commit();
+		session.close();
 		
 		return list;
 	}

@@ -80,6 +80,7 @@ public class RequirementTrainer extends HttpServlet {
 					}
 					
 					session.getTransaction().commit();
+					session.close();
 					
 					for (Object[] r : list) {
 						JSONObject tmp = new JSONObject();
@@ -212,6 +213,7 @@ public class RequirementTrainer extends HttpServlet {
 			session.createQuery("delete from Requirement r where r.id = " + requireId).executeUpdate();
 			
 			session.getTransaction().commit();
+			session.close();
 			
 			HttpResponseUtil.setResponse(resp, data, error);
 			

@@ -55,6 +55,8 @@ public class TrainerStudentController extends HttpServlet{
 			session.save(newTrainerStudent);
 			tx.commit();
 			
+			session.close();
+			
 			
 			//gá»­i http response vá»� cho client
 			JSONObject bodyJsonResponse = new JSONObject();
@@ -140,6 +142,8 @@ public class TrainerStudentController extends HttpServlet{
 		    res.setCharacterEncoding("UTF-8");
 		    out.print(bodyStringResponse);
 		    out.flush(); 
+		    
+		    session.close();
 		}
 		catch(Exception e) {
 			res.addHeader("Access-Control-Allow-Origin", "*");
@@ -186,6 +190,8 @@ public class TrainerStudentController extends HttpServlet{
 			session.update(newTrainerStudent);
 			tx.commit();
 			
+			session.close();
+			
 			
 			//gá»­i http response vá»� cho client
 			JSONObject bodyJsonResponse = new JSONObject();
@@ -230,6 +236,8 @@ public class TrainerStudentController extends HttpServlet{
 	
 			session.delete(newTrainerStudent);
 			tx.commit();
+			
+			session.close();
 			
 			
 			//gá»­i http response vá»� cho client

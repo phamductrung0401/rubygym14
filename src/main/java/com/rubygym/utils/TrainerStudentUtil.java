@@ -19,6 +19,7 @@ public class TrainerStudentUtil {
 				+ studentId).uniqueResult();
 		
 		session.getTransaction().commit();
+		session.close();
 //		HibernateUtil.shutdown();
 		return s;
 	}
@@ -32,6 +33,7 @@ public class TrainerStudentUtil {
 				+ trainerId).uniqueResult();
 		
 		session.getTransaction().commit();
+		session.close();
 //		HibernateUtil.shutdown();
 		return t;
 	}
@@ -44,6 +46,7 @@ public class TrainerStudentUtil {
 				+ " from TrainerStudent ts where ts.studentId = " + studentId).uniqueResult();
 		
 		session.getTransaction().commit();
+		session.close();
 //		HibernateUtil.shutdown();
 		return trainerId;
 	}
@@ -56,6 +59,7 @@ public class TrainerStudentUtil {
 				+ " from TrainerStudent ts where ts.studentId = " + studentId).uniqueResult();
 		
 		session.getTransaction().commit();
+		session.close();
 //		HibernateUtil.shutdown();
 		return trainerStudentId;
 	}
@@ -68,6 +72,7 @@ public class TrainerStudentUtil {
 				+ " from TrainerStudent ts where ts.id = " + trainerStudentId).uniqueResult();
 		
 		session.getTransaction().commit();
+		session.close();
 //		HibernateUtil.shutdown();
 		return studentId;
 	}

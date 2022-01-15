@@ -56,6 +56,8 @@ public class TrainerController extends HttpServlet  {
 			session.save(newTrainer);
 			tx.commit();
 			
+			session.close();
+			
 			
 			//gửi http response về cho client
 			JSONObject bodyJsonResponse = new JSONObject();
@@ -131,6 +133,8 @@ public class TrainerController extends HttpServlet  {
 		    res.setCharacterEncoding("UTF-8");
 		    out.print(bodyStringResponse);
 		    out.flush(); 
+		    
+		    tx.commit(); session.close();
 		}
 		catch(Exception e) {
 			res.addHeader("Access-Control-Allow-Origin", "*");
@@ -189,6 +193,8 @@ public class TrainerController extends HttpServlet  {
 			if (t.get("account_trainer_id") != null)newTrainer.setAccountId( ((Long) t.get("account_trainer_id")).intValue());
 			session.update(newTrainer);
 			tx.commit();
+			
+			session.close();
 			
 			
 			//gửi http response về cho client

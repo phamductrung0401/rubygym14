@@ -1,6 +1,7 @@
 package com.rubygym.servlet;
 
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +94,8 @@ public class RequirementStudent extends HttpServlet {
 					}
 					error.add(null);
 					HttpResponseUtil.setResponse(resp, data, error);
+					
+					session.close();
 				}
 				
 				else {
@@ -155,6 +158,7 @@ public class RequirementStudent extends HttpServlet {
 				}
 				
 				session.getTransaction().commit();
+				session.close();
 			}
 			// updated requirement
 			else if (category == 0) {
@@ -162,31 +166,43 @@ public class RequirementStudent extends HttpServlet {
 				int trainerStudentId = TrainerStudentUtil.getTrainerStudentId(Integer.parseInt(idString));
 				// lấy newTime từ request
 				JSONObject newTime = (JSONObject)dataClient.get("newTime");
-				int timeId = TimeUtil.getTime(Integer.parseInt(newTime.get("dayOfWeek").toString()),
+				Time studentReqTime = TimeUtil.getTime(Integer.parseInt(newTime.get("dayOfWeek").toString()),
 						LocalTime.parse(newTime.get("start").toString()),
-						LocalTime.parse(newTime.get("finish").toString())).getId();
+						LocalTime.parse(newTime.get("finish").toString()));
 				
-				Session session = HibernateUtil.getSessionFactory().openSession();
-				session.beginTransaction();
-				if (ScheduleUtil.checkDuplicatedRequirement(category, oldScheduleId, timeId, Integer.parseInt(idString))) {
+				if (studentReqTime != null) {
+				
+					int timeId = studentReqTime.getId();
 					
-					Requirement requirement = new Requirement(trainerStudentId, oldScheduleId, timeId, category);
-					session.save(requirement);
+					Session session = HibernateUtil.getSessionFactory().openSession();
+					session.beginTransaction();
+					if (ScheduleUtil.checkDuplicatedRequirement(category, oldScheduleId, timeId, Integer.parseInt(idString))) {
+						
+						Requirement requirement = new Requirement(trainerStudentId, oldScheduleId, timeId, category);
+						session.save(requirement);
+						
+						data.add("Thêm yêu cầu cập nhật thành công");
+						error.add(null);
+						HttpResponseUtil.setResponse(resp, data, error);
+						
+					}
 					
-					data.add("Thêm yêu cầu cập nhật thành công");
-					error.add(null);
-					HttpResponseUtil.setResponse(resp, data, error);
+					else {
+						error.add("Yêu cầu thay đổi/xoá lịch tập này đã được thực hiện hoặc lịch tập mới chưa được thay đổi."
+								+ " Xoá các yêu cầu thay đổi hoặc tạo mới lịch tập và liên hệ với huấn luyện viên của bạn.");
+						data.add(null);
+						HttpResponseUtil.setResponse(resp, data, error);
+					}
 					
+					session.getTransaction().commit();
+					session.close();
 				}
 				
 				else {
-					error.add("Yêu cầu thay đổi/xoá lịch tập này đã được thực hiện hoặc lịch tập mới chưa được thay đổi."
-							+ " Xoá các yêu cầu thay đổi hoặc tạo mới lịch tập và liên hệ với huấn luyện viên của bạn.");
 					data.add(null);
+					error.add("Không thể đăng ký tập vào giờ nghỉ trưa của trung tâm (từ 11:00 đến 13:30)!");
 					HttpResponseUtil.setResponse(resp, data, error);
 				}
-				
-				session.getTransaction().commit();
 			}
 			
 			// created requirement
@@ -195,39 +211,50 @@ public class RequirementStudent extends HttpServlet {
 				int trainerStudentId = TrainerStudentUtil.getTrainerStudentId(Integer.parseInt(idString));
 				// lấy newTime từ request
 				JSONObject newTime = (JSONObject)dataClient.get("newTime");
-				int timeId = TimeUtil.getTime(Integer.parseInt(newTime.get("dayOfWeek").toString()),
+				Time studentReqTime = TimeUtil.getTime(Integer.parseInt(newTime.get("dayOfWeek").toString()),
 						LocalTime.parse(newTime.get("start").toString()),
-						LocalTime.parse(newTime.get("finish").toString())).getId();
+						LocalTime.parse(newTime.get("finish").toString()));
+				if (studentReqTime != null) {
+					Integer timeId = studentReqTime.getId();
 				
-				Session session = HibernateUtil.getSessionFactory().openSession();
-				session.beginTransaction();
-				if (ScheduleUtil.checkDuplicatedRequirement(category, null, timeId, Integer.parseInt(idString))) {
-					if (!ScheduleUtil.isExceedPeriod(Integer.parseInt(idString))) {
+					Session session = HibernateUtil.getSessionFactory().openSession();
+					session.beginTransaction();
+					if (ScheduleUtil.checkDuplicatedRequirement(category, null, timeId, Integer.parseInt(idString))) {
+						if (!ScheduleUtil.isExceedPeriod(Integer.parseInt(idString))) {
+							
+							
+							Requirement requirement = new Requirement(trainerStudentId, null, timeId, category);
+							session.save(requirement);
+							
+							data.add("Thêm yêu cầu tạo buổi tập mới thành công");
+							error.add(null);
+							HttpResponseUtil.setResponse(resp, data, error);
+						}
 						
-						
-						Requirement requirement = new Requirement(trainerStudentId, null, timeId, category);
-						session.save(requirement);
-						
-						data.add("Thêm yêu cầu tạo buổi tập mới thành công");
-						error.add(null);
-						HttpResponseUtil.setResponse(resp, data, error);
+						else {
+							error.add("Không thể thêm yêu cầu tạo mới lịch tập do giới hạn của gói tập bạn đăng ký."
+									+ "Thêm yêu cầu xoá lịch tập và liên hệ huấn luyện viên của bạn hoặc Xoá bớt yêu cầu tạo mới lịch tập");
+							data.add(null);
+							HttpResponseUtil.setResponse(resp, data, error);
+						}
 					}
-					
+						
 					else {
-						error.add("Không thể thêm yêu cầu tạo mới lịch tập do giới hạn của gói tập bạn đăng ký."
-								+ "Thêm yêu cầu xoá lịch tập và liên hệ huấn luyện viên của bạn hoặc Xoá bớt yêu cầu tạo mới lịch tập");
+						error.add("Lịch tập mới này xung đột trong bảng yêu cầu của bạn");
 						data.add(null);
 						HttpResponseUtil.setResponse(resp, data, error);
 					}
+			
+				
+					session.getTransaction().commit();
+					session.close();
 				}
 				
 				else {
-					error.add("Lịch tập mới này xung đột trong bảng yêu cầu của bạn");
 					data.add(null);
+					error.add("Không thể đăng ký tập vào giờ nghỉ trưa của trung tâm (từ 11:00 đến 13:30)!");
 					HttpResponseUtil.setResponse(resp, data, error);
 				}
-				
-				session.getTransaction().commit();
 			}
 			// ít xảy ra
 			else {
@@ -271,6 +298,7 @@ public class RequirementStudent extends HttpServlet {
 			data.add("Xoá yêu cầu thành công");
 			error.add(null);
 			HttpResponseUtil.setResponse(resp, data, error);
+			session.close();
 		}
 		catch (Exception e) {
 			// TODO: handle exception

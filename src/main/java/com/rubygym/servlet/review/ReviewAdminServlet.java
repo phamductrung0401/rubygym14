@@ -38,6 +38,7 @@ public class ReviewAdminServlet extends HttpServlet{
 			list = session.createQuery("from ReviewAdmin ra").getResultList();
 			
 			session.getTransaction().commit();
+			session.close();
 			
 			for (int i = 0; i < list.size(); i++) {
 				JSONObject jsonObject = new JSONObject();
@@ -125,6 +126,7 @@ public class ReviewAdminServlet extends HttpServlet{
 			}
 			
 			session.getTransaction().commit();
+			session.close();
 			
 			data.add("Thao tác thành công");
 			error.add(null);
@@ -162,6 +164,7 @@ public class ReviewAdminServlet extends HttpServlet{
 					+ "where ra.studentId = " + studentId).executeUpdate();
 			
 			session.getTransaction().commit();
+			session.close();
 			
 			data.add("Xoá phản hồi của khách hàng (trên trang chủ) thành công");
 			error.add(null);
