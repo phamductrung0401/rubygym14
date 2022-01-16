@@ -36,7 +36,7 @@ public class ScheduleStudentServlet extends HttpServlet {
 //		if (HttpRequestUtil.checkAuthentication(req)) {
 			
 			try {
-				resp.addHeader("Access-Control-Allow-Origin", "*");
+//				resp.addHeader("Access-Control-Allow-Origin", "*");
 				String idString = HttpRequestUtil.parseURL(req, "schedule-student");
 				if (ScheduleUtil.checkStudentId(Integer.parseInt(idString))) {
 					list = ScheduleUtil.getStudentSchedule(Integer.parseInt(idString));
@@ -69,7 +69,7 @@ public class ScheduleStudentServlet extends HttpServlet {
 				}
 				
 			} catch (Exception e) {
-				resp.addHeader("Access-Control-Allow-Origin", "*");
+//				resp.addHeader("Access-Control-Allow-Origin", "*");
 				// TODO: handle exception
 				e.printStackTrace();
 				

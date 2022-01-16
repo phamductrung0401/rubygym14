@@ -42,7 +42,7 @@ public class RequirementStudent extends HttpServlet {
 //		if (HttpRequestUtil.checkAuthentication(req)) {
 			
 			try {
-				resp.addHeader("Access-Control-Allow-Origin", "*");
+//				resp.addHeader("Access-Control-Allow-Origin", "*");
 				String idString = HttpRequestUtil.parseURL(req, "requirement-student");
 				if (ScheduleUtil.checkStudentId(Integer.parseInt(idString))) {
 					Session session = HibernateUtil.getSessionFactory().openSession();
@@ -105,7 +105,7 @@ public class RequirementStudent extends HttpServlet {
 				}
 				
 			} catch (Exception e) {
-				resp.addHeader("Access-Control-Allow-Origin", "*");
+//				resp.addHeader("Access-Control-Allow-Origin", "*");
 				// TODO: handle exception
 				e.printStackTrace();
 				
@@ -133,7 +133,7 @@ public class RequirementStudent extends HttpServlet {
 		String idString = HttpRequestUtil.parseURL(req, "requirement-student");
 		
 		try {
-			resp.addHeader("Access-Control-Allow-Origin", "*");
+//			resp.addHeader("Access-Control-Allow-Origin", "*");
 			JSONObject dataClient = (JSONObject) HttpRequestUtil.getBody(req);
 			int category = Integer.parseInt(dataClient.get("category").toString()); // chưa check null category ?
 			
@@ -264,7 +264,7 @@ public class RequirementStudent extends HttpServlet {
 			}
 			
 		} catch (Exception e) {
-			resp.addHeader("Access-Control-Allow-Origin", "*");
+//			resp.addHeader("Access-Control-Allow-Origin", "*");
 			// TODO: handle exception
 			e.printStackTrace();
 			

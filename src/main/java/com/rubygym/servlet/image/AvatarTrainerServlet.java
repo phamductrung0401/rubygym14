@@ -77,7 +77,7 @@ public class AvatarTrainerServlet extends HttpServlet{
 		String idString = HttpRequestUtil.parseURL(request, "avatar-trainer");
 		
 		try {
-			response.addHeader("Access-Control-Allow-Origin", "*");
+//			response.addHeader("Access-Control-Allow-Origin", "*");
 			
 			Part part = request.getPart("avatar");
 			String fileName = part.getSubmittedFileName();
@@ -106,7 +106,7 @@ public class AvatarTrainerServlet extends HttpServlet{
 			
 			else {
 				//the file was not a JPG or PNG
-				response.addHeader("Access-Control-Allow-Origin", "*");
+//				response.addHeader("Access-Control-Allow-Origin", "*");
 				data.add(null);
 				error.add("Lỗi định dạng. Chỉ cho phép .jpg và .png");
 				HttpResponseUtil.setResponse(response, data, error);
@@ -115,7 +115,7 @@ public class AvatarTrainerServlet extends HttpServlet{
 			
 			
 		} catch (Exception e) {
-			response.addHeader("Access-Control-Allow-Origin", "*");
+//			response.addHeader("Access-Control-Allow-Origin", "*");
 			// TODO: handle exception
 			e.printStackTrace();
 			error.add(e.getMessage());

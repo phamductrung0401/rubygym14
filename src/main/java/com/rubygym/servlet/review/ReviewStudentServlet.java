@@ -64,11 +64,11 @@ public class ReviewStudentServlet extends HttpServlet {
 			data.add(jsonObject);
 			error.add(null);
 			
-			resp.addHeader("Access-Control-Allow-Origin", "*");
+//			resp.addHeader("Access-Control-Allow-Origin", "*");
 			HttpResponseUtil.setResponse(resp, data, error);
 			
 		} catch (Exception e) {
-			resp.addHeader("Access-Control-Allow-Origin", "*");
+//			resp.addHeader("Access-Control-Allow-Origin", "*");
 			// TODO: handle exception
 			e.printStackTrace();
 			
@@ -98,7 +98,7 @@ public class ReviewStudentServlet extends HttpServlet {
 					+ "from ReviewStudent rs where rs.studentId = " 
 					+ Integer.parseInt(idString)).uniqueResult();
 			
-			resp.addHeader("Access-Control-Allow-Origin", "*");
+//			resp.addHeader("Access-Control-Allow-Origin", "*");
 			
 			if (reviewStudent == null) {
 				reviewStudent = new ReviewStudent();
@@ -128,7 +128,7 @@ public class ReviewStudentServlet extends HttpServlet {
 			
 			
 		} catch (Exception e) {
-			resp.addHeader("Access-Control-Allow-Origin", "*");
+//			resp.addHeader("Access-Control-Allow-Origin", "*");
 			// TODO: handle exception
 			e.printStackTrace();
 			
@@ -161,11 +161,11 @@ public class ReviewStudentServlet extends HttpServlet {
 			
 			data.add("Xoá đánh giá / phản hồi thành công");
 			error.add(null);
-			resp.addHeader("Access-Control-Allow-Origin", "*");
+//			resp.addHeader("Access-Control-Allow-Origin", "*");
 			HttpResponseUtil.setResponse(resp, data, error);
 			
 		} catch (Exception e) {
-			resp.addHeader("Access-Control-Allow-Origin", "*");
+//			resp.addHeader("Access-Control-Allow-Origin", "*");
 			// TODO: handle exception
 			e.printStackTrace();
 			
@@ -210,11 +210,11 @@ public class ReviewStudentServlet extends HttpServlet {
 			
 			data.add("Chỉnh sửa đánh giá / phản hồi thành công");
 			error.add(null);
-			resp.addHeader("Access-Control-Allow-Origin", "*");
+//			resp.addHeader("Access-Control-Allow-Origin", "*");
 			HttpResponseUtil.setResponse(resp, data, error);
 			
 		} catch (Exception e) {
-			resp.addHeader("Access-Control-Allow-Origin", "*");
+//			resp.addHeader("Access-Control-Allow-Origin", "*");
 			// TODO: handle exception
 			e.printStackTrace();
 			

@@ -52,11 +52,11 @@ public class ReviewAdminServlet extends HttpServlet{
 			}
 			
 			error.add(null);
-			resp.addHeader("Access-Control-Allow-Origin", "*");
+//			resp.addHeader("Access-Control-Allow-Origin", "*");
 			HttpResponseUtil.setResponse(resp, data, error);
 			
 		} catch (Exception e) {
-			resp.addHeader("Access-Control-Allow-Origin", "*");
+//			resp.addHeader("Access-Control-Allow-Origin", "*");
 			// TODO: handle exception
 			e.printStackTrace();
 			
@@ -130,11 +130,11 @@ public class ReviewAdminServlet extends HttpServlet{
 			
 			data.add("Thao tác thành công");
 			error.add(null);
-			resp.addHeader("Access-Control-Allow-Origin", "*");
+//			resp.addHeader("Access-Control-Allow-Origin", "*");
 			HttpResponseUtil.setResponse(resp, data, error);
 			
 		} catch (Exception e) {
-			resp.addHeader("Access-Control-Allow-Origin", "*");
+//			resp.addHeader("Access-Control-Allow-Origin", "*");
 			// TODO: handle exception
 			e.printStackTrace();
 			
@@ -168,11 +168,11 @@ public class ReviewAdminServlet extends HttpServlet{
 			
 			data.add("Xoá phản hồi của khách hàng (trên trang chủ) thành công");
 			error.add(null);
-			resp.addHeader("Access-Control-Allow-Origin", "*");
+//			resp.addHeader("Access-Control-Allow-Origin", "*");
 			HttpResponseUtil.setResponse(resp, data, error);
 			
 		} catch (Exception e) {
-			resp.addHeader("Access-Control-Allow-Origin", "*");
+//			resp.addHeader("Access-Control-Allow-Origin", "*");
 			// TODO: handle exception
 			e.printStackTrace();
 			

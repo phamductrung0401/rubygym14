@@ -37,7 +37,7 @@ public class ServiceController extends HttpServlet{
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		try {
-			res.addHeader("Access-Control-Allow-Origin", "*");
+//			res.addHeader("Access-Control-Allow-Origin", "*");
 			Session session = factory.openSession();
 			Transaction tx = session.beginTransaction();
 			String[] criteria_array = HttpRequestUtil.getQuery(req);
@@ -74,7 +74,7 @@ public class ServiceController extends HttpServlet{
 		    session.close();
 		}
 		catch(Exception e) {
-			res.addHeader("Access-Control-Allow-Origin", "*");
+//			res.addHeader("Access-Control-Allow-Origin", "*");
 			JSONObject bodyJsonResponse = new JSONObject();
 			bodyJsonResponse.put("error", e.getMessage());
 			JSONArray errors = new JSONArray();

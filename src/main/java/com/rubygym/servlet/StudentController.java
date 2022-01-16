@@ -39,7 +39,6 @@ public class StudentController extends HttpServlet  {
 		req.setCharacterEncoding("UTF-8");
 		res.setCharacterEncoding("UTF-8");
 		try {
-			res.addHeader("Access-Control-Allow-Origin", "*");
 			Session session = factory.openSession();
 			Transaction tx = session.beginTransaction();
 			
@@ -64,7 +63,7 @@ public class StudentController extends HttpServlet  {
 			
 			
 			//gửi http response về cho client
-			res.addHeader("Access-Control-Allow-Origin", "*");
+//			res.addHeader("Access-Control-Allow-Origin", "*");
 			JSONObject bodyJsonResponse = new JSONObject();
 			bodyJsonResponse.put("error", "null");
 			bodyJsonResponse.put("data", "null");
@@ -78,7 +77,7 @@ public class StudentController extends HttpServlet  {
 		    session.close();
 			
 		} catch (Exception e) {
-			res.addHeader("Access-Control-Allow-Origin", "*");
+//			res.addHeader("Access-Control-Allow-Origin", "*");
 			JSONObject bodyJsonResponse = new JSONObject();
 			bodyJsonResponse.put("error", e.getMessage());
 			JSONArray errors = new JSONArray();
@@ -99,7 +98,7 @@ public class StudentController extends HttpServlet  {
 		req.setCharacterEncoding("UTF-8");
 		res.setCharacterEncoding("UTF-8");
 		try {
-			res.addHeader("Access-Control-Allow-Origin", "*");
+//			res.addHeader("Access-Control-Allow-Origin", "*");
 			Session session = factory.openSession();
 			Transaction tx = session.beginTransaction();
 			String[] criteria_array = HttpRequestUtil.getQuery(req);
@@ -150,7 +149,7 @@ public class StudentController extends HttpServlet  {
 		    session.close();
 		}
 		catch(Exception e) {
-			 res.addHeader("Access-Control-Allow-Origin", "*");
+//			 res.addHeader("Access-Control-Allow-Origin", "*");
 			JSONObject bodyJsonResponse = new JSONObject();
 			bodyJsonResponse.put("error", e.getMessage());
 			JSONArray errors = new JSONArray();
@@ -178,7 +177,7 @@ public class StudentController extends HttpServlet  {
 		req.setCharacterEncoding("UTF-8");
 		res.setCharacterEncoding("UTF-8");
 		try {
-			res.addHeader("Access-Control-Allow-Origin", "*");
+//			res.addHeader("Access-Control-Allow-Origin", "*");
 			Session session = factory.openSession();
 			Transaction tx = session.beginTransaction();
 			
@@ -226,7 +225,7 @@ public class StudentController extends HttpServlet  {
 		    out.flush();  					
 			
 		} catch (Exception e) {
-			res.addHeader("Access-Control-Allow-Origin", "*");
+//			res.addHeader("Access-Control-Allow-Origin", "*");
 			JSONObject bodyJsonResponse = new JSONObject();
 			bodyJsonResponse.put("error", e.getMessage());
 			JSONArray errors = new JSONArray();

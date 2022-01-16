@@ -79,21 +79,21 @@ public class ImageEventServlet extends HttpServlet {
 				jsonObject.put("imageUrl", uploadedFileUrl);
 				data.add(jsonObject);
 				error.add(null);
-				response.addHeader("Access-Control-Allow-Origin", "*");
+//				response.addHeader("Access-Control-Allow-Origin", "*");
 				HttpResponseUtil.setResponse(response, data, error);
 				
 			}
 			
 			else {
 				//the file was not a JPG or PNG
-				response.addHeader("Access-Control-Allow-Origin", "*");
+//				response.addHeader("Access-Control-Allow-Origin", "*");
 				data.add(null);
 				error.add("Lỗi định dạng. Chỉ cho phép .jpg và .png");
 				HttpResponseUtil.setResponse(response, data, error);
 			}
 			
 		} catch (Exception e) {
-			response.addHeader("Access-Control-Allow-Origin", "*");
+//			response.addHeader("Access-Control-Allow-Origin", "*");
 			// TODO: handle exception
 			e.printStackTrace();
 			error.add(e.getMessage());

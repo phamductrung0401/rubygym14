@@ -35,7 +35,7 @@ public class PeriodTrainerServlet extends HttpServlet {
 		resp.setCharacterEncoding("UTF-8");
 		
 		try {
-			resp.addHeader("Access-Control-Allow-Origin", "*");
+//			resp.addHeader("Access-Control-Allow-Origin", "*");
 			String idString = HttpRequestUtil.parseURL(req, "period-trainer");
 			if (ScheduleUtil.checkTrainerId(Integer.parseInt(idString))) {
 				
@@ -136,7 +136,7 @@ public class PeriodTrainerServlet extends HttpServlet {
 		
 			
 		} catch (Exception e) {
-			resp.addHeader("Access-Control-Allow-Origin", "*");
+//			resp.addHeader("Access-Control-Allow-Origin", "*");
 			// TODO: handle exception
 			e.printStackTrace();
 			
@@ -155,7 +155,7 @@ public class PeriodTrainerServlet extends HttpServlet {
 		resp.setCharacterEncoding("UTF-8");
 		
 		try {
-			resp.addHeader("Access-Control-Allow-Origin", "*");
+//			resp.addHeader("Access-Control-Allow-Origin", "*");
 			String idString = HttpRequestUtil.parseURL(req, "period-trainer");
 			JSONObject jsonObject = (JSONObject) HttpRequestUtil.getBody(req);
 			Integer periodId = Integer.parseInt(jsonObject.get("periodId").toString());
@@ -178,7 +178,7 @@ public class PeriodTrainerServlet extends HttpServlet {
 			session.close();
 			
 		} catch (Exception e) {
-			resp.addHeader("Access-Control-Allow-Origin", "*");
+//			resp.addHeader("Access-Control-Allow-Origin", "*");
 			// TODO: handle exception
 			e.printStackTrace();
 			
