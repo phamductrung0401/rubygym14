@@ -172,7 +172,7 @@ public class EventController extends HttpServlet{
 
 			if (t.get("title") != null) newEvent.setTitle( (String) t.get("title"));
 			if (t.get("description") != null) newEvent.setDescription( (String) t.get("description"));
-			if (t.get("category") != null)newEvent.setCategory((Integer) t.get("category"));
+			if (t.get("category") != null)newEvent.setCategory(((Long) t.get("category")).intValue());
 			if (t.get("expire") != null)newEvent.setExpire((LocalDate) LocalDate.parse((CharSequence) t.get("expire")));
 		
 			session.update(newEvent);
