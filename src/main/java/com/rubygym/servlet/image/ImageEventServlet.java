@@ -3,12 +3,7 @@ package com.rubygym.servlet.image;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -28,46 +23,14 @@ import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
+import com.rubygym.model.Picture;
 import com.rubygym.utils.HibernateUtil;
 import com.rubygym.utils.HttpRequestUtil;
 import com.rubygym.utils.HttpResponseUtil;
 
 @MultipartConfig
-@WebServlet("/avatar-student/*")
-public class AvatarStudentServlet extends HttpServlet{
-//	@Override
-//	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		JSONArray data = new JSONArray();
-//		JSONArray error = new JSONArray();
-//		request.setCharacterEncoding("UTF-8");
-//		response.setCharacterEncoding("UTF-8");
-//		String idString = HttpRequestUtil.parseURL(request, "avatar-student");
-//		
-//		try {
-//			response.addHeader("Access-Control-Allow-Origin", "*");
-//			
-//			Session session = HibernateUtil.getSessionFactory().openSession();
-//			session.beginTransaction();
-//			
-//			String avatarUrl = (String) session.createQuery("select s.avatar from Student s where s.id = " + Integer.parseInt(idString))
-//					.uniqueResult();
-//			
-//			JSONObject tmp = new JSONObject();
-//			tmp.put("avatarUrl", avatarUrl);
-//			data.add(tmp);
-//			error.add(null);
-//			HttpResponseUtil.setResponse(response, data, error);
-//			
-//		}
-//		catch (Exception e) {
-//			e.printStackTrace();
-//			// TODO: handle exception
-//			response.addHeader("Access-Control-Allow-Origin", "*");
-//			data.add(null);
-//			error.add(e.getMessage());
-//			HttpResponseUtil.setResponse(response, data, error);
-//		}
-//	}
+@WebServlet(urlPatterns = "/image-event/*")
+public class ImageEventServlet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -76,35 +39,49 @@ public class AvatarStudentServlet extends HttpServlet{
 		JSONArray error = new JSONArray();
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
-		String idString = HttpRequestUtil.parseURL(request, "avatar-student");
+		String eventIdString = HttpRequestUtil.parseURL(request, "image-event");
 		
 		try {
-			response.addHeader("Access-Control-Allow-Origin", "*");
 			
-			Part part = request.getPart("avatar");
+			Part part = request.getPart("image");
 			String fileName = part.getSubmittedFileName();
-			
-			// restrict file ext : only allow .jpg and .png
 			if (part.getSubmittedFileName().endsWith(".jpg") || part.getSubmittedFileName().endsWith(".png")) {
 				InputStream fileInputStream = part.getInputStream();
 				
-				String path = request.getSession().getServletContext().getRealPath("/upload-gcloud-key.json");
-				
-				String uploadedFileUrl = uploadToCloudStorage(path, fileName, fileInputStream);
-				
+				String keyPath = request.getSession().getServletContext().getRealPath("/upload-gcloud-key.json");
+			
+				String uploadedFileUrl = uploadToCloudStorage(keyPath, fileName, fileInputStream);
+			
 				Session session = HibernateUtil.getSessionFactory().openSession();
 				session.beginTransaction();
 				
-				session.createQuery("update Student s set s.avatar = '" + uploadedFileUrl +
-						"' where s.id = " + Integer.parseInt(idString)).executeUpdate();
-				JSONObject jsonObject = new JSONObject();
-				jsonObject.put("avatarUrl", uploadedFileUrl);
-				data.add(jsonObject);
-				error.add(null);
-				HttpResponseUtil.setResponse(response, data, error);
+				Picture newPicture = (Picture) session.createQuery("from Picture p "
+						+ "where p.eventId = " + Integer.parseInt(eventIdString)).uniqueResult();
+				
+				if (newPicture != null) {
+					// sửa 
+					session.createQuery("update Picture p set p.imageUrl = "
+							+ uploadedFileUrl + " where p.eventId = " + Integer.parseInt(eventIdString))
+					.executeUpdate();
+				}
+				else {
+					// thêm mới
+					newPicture = new Picture();
+					newPicture.setEventId(Integer.parseInt(eventIdString));
+					newPicture.setImageUrl(uploadedFileUrl);
+					session.save(newPicture);
+				}
 				
 				session.getTransaction().commit();
 				session.close();
+				
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("imageUrl", uploadedFileUrl);
+				data.add(jsonObject);
+				error.add(null);
+				response.addHeader("Access-Control-Allow-Origin", "*");
+				HttpResponseUtil.setResponse(response, data, error);
+				
 			}
 			
 			else {
@@ -115,8 +92,6 @@ public class AvatarStudentServlet extends HttpServlet{
 				HttpResponseUtil.setResponse(response, data, error);
 			}
 			
-			
-			
 		} catch (Exception e) {
 			response.addHeader("Access-Control-Allow-Origin", "*");
 			// TODO: handle exception
@@ -125,6 +100,7 @@ public class AvatarStudentServlet extends HttpServlet{
 			data.add(null);
 			HttpResponseUtil.setResponse(response, data, error);
 		}
+		
 	}
 	
 	private static String uploadToCloudStorage(String pathToKey, String fileName, InputStream fileInputStream) throws IOException {
@@ -149,9 +125,6 @@ public class AvatarStudentServlet extends HttpServlet{
 		String publicUrl = "https://storage.googleapis.com/" + bucketName + "/" + uploadName;
 		return publicUrl;
 		
-		
 	}
-	
-	
 	
 }

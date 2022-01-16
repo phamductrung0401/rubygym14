@@ -51,6 +51,7 @@
         <mapping class="com.rubygym.model.Event"></mapping>
         <mapping class="com.rubygym.model.ReviewStudent"></mapping>
         <mapping class="com.rubygym.model.ReviewAdmin"></mapping>
+        <mapping class="com.rubygym.model.Picture"></mapping>
            
         
 <!--         <property name="hibernate.connection.password">asd123asd123</property>
