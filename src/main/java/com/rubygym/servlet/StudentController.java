@@ -206,7 +206,7 @@ public class StudentController extends HttpServlet  {
 			if (t.get("weight") != null)newStudent.setWeight(((Double) t.get("weight")).doubleValue());
 			if (t.get("bmi") != null)newStudent.setBmi(((Double) t.get("bmi")).doubleValue());
 			if (t.get("others") != null)newStudent.setOthers((String) t.get("others"));
-			if (t.get("target") != null)newStudent.setEmail((String) t.get("target"));
+			if (t.get("target") != null)newStudent.setTarget((String) t.get("target"));
 			if (t.get("account_student_id") != null)newStudent.setAccountId(((Long) t.get("account_student_id")).intValue());
 			session.update(newStudent);
 			tx.commit();
